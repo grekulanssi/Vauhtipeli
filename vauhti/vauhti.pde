@@ -33,7 +33,8 @@ class Pelimoottori {
 
 class Objekti {
   //kaikki esineet mitä siinä näkyy  
-  int x, y;
+  int x, y, leveys, korkeus;
+  
 }
 
 
