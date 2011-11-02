@@ -38,6 +38,9 @@ abstract class Objekti {
   //kaikki esineet mitä siinä näkyy  
   int x, y;
   
+  void piirra() {
+    ellipse(x,y, 10, 10);
+  }
 }
 
 

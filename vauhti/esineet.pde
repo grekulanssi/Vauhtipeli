@@ -12,11 +12,11 @@ class Esine extends Objekti {
     return loadImage(url);
   }
   
-  public onKiva() {
+  public boolean onKiva() {
     return kiva;
   }
   
-  draw() {
+  void draw() {
     image(kuva, x,y);
   }
 }
