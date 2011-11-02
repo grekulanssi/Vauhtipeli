@@ -7,7 +7,7 @@ void setup() {
 }
 
 void draw() {
-  moottori.piirra();
+  
 }
 
 
@@ -29,14 +29,11 @@ class Pelimoottori {
     return this.mopo;
   }
   
-  void piirra() {
-      
-  }
 }
 
-abstract class Objekti {
+class Objekti {
   //kaikki esineet mitä siinä näkyy  
-  int x, y;
+  int x, y, leveys, korkeus;
   
   void piirra() {
     ellipse(x,y, 10, 10);
@@ -48,7 +45,6 @@ class Mopo extends Objekti {
   //collisiondetecting esineiden kanssa
   //jos kiva esine niin jotain plussaa
   //jos paha esine niin jotain kamalaa
-  
 }
 
 
