@@ -1,7 +1,7 @@
 Pelimoottori moottori;
 
 void setup() {
-  size(400,600);
+  size(600,700);
   background(255);
   moottori = new Pelimoottori();
 }
