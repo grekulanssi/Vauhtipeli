@@ -1,10 +1,12 @@
-class Esine extends Objekti {
+abstract class Esine extends Objekti {
   boolean kiva;
   PImage kuva;
   
   public Esine(boolean onkoKiva) {
     kiva = onkoKiva;
     kuva = lataaKuva();
+    x = 0;
+    y = -korkeus;
   }
   
   private PImage lataaKuva() {
