@@ -1,4 +1,4 @@
-abstract class Esine extends Objekti {
+class Esine extends Objekti {
   boolean kiva;
   
 }
