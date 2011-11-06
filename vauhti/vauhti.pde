@@ -1,13 +1,13 @@
 Pelimoottori moottori;
 
 void setup() {
-  size(400,600);
+  size(600,700);
   background(255);
   moottori = new Pelimoottori();
 }
 
 void draw() {
-  
+  moottori.piirra();
 }
 
 
@@ -29,6 +29,9 @@ class Pelimoottori {
     return this.mopo;
   }
   
+  void piirra() {
+      
+  }
 }
 
 class Objekti {
@@ -39,12 +42,4 @@ class Objekti {
     ellipse(x,y, 10, 10);
   }
 }
-
-
-class Mopo extends Objekti {
-  //collisiondetecting esineiden kanssa
-  //jos kiva esine niin jotain plussaa
-  //jos paha esine niin jotain kamalaa
-}
-
 
