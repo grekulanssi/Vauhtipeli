@@ -2,27 +2,35 @@ abstract class Esine extends Objekti {
   boolean kiva;
   PImage kuva;
   
-  public Esine(boolean onkoKiva) {
+  public Esine(boolean onkoKiva, String tiedostonimi, int x, int y, int leveys, int korkeus) {
+    super(x, y, leveys, korkeus);
     kiva = onkoKiva;
-    kuva = lataaKuva();
-    x = 0;
-    y = -korkeus;
+    kuva = loadImage(tiedostonimi);
   }
-  
-  private PImage lataaKuva() {
-    String url = this.getClass().getName() + ".png";
-    return loadImage(url);
-  }
-  
+    
   public boolean onKiva() {
     return kiva;
   }
   
-  void draw() {
+  void piirra() {
+    imageMode(CENTER);
     image(kuva, x,y);
+  }
+  
+  boolean tormaako(Mopo mopo) {
+    int minXEtaisyys = mopo.leveys/2 + this.leveys/2;
+    int minYEtaisyys = mopo.korkeus/2 + this.korkeus/2; 
+    
+    if (Math.abs(this.x-mopo.x) < minXEtaisyys ||
+        Math.abs(this.y-mopo.y) < minYEtaisyys) {
+         return true; 
+        }
+        
+    return false;
   }
 }
 
+/*
 class Jerrykannu extends Esine {
   public Jerrykannu() {
     super(true);
@@ -53,11 +61,11 @@ class Auto extends Esine {
   }
   
 }
-
+*/
 class Piikkimatto extends Esine {
   
-  public Piikkimatto() {
-    super(false);
+  public Piikkimatto(int x, int y) {
+    super(false, "piikkimatto.png", x, y, 10, 10);
   }
 }
 
