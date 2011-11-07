@@ -27,7 +27,7 @@ abstract class Esine extends Objekti {
     int minXEtaisyys = mopo.leveys/2 + this.leveys/2;
     int minYEtaisyys = mopo.korkeus/2 + this.korkeus/2; 
     
-    if (Math.abs(this.x-mopo.x) < minXEtaisyys ||
+    if (Math.abs(this.x-mopo.x) < minXEtaisyys && 
         Math.abs(this.y-mopo.y) < minYEtaisyys) {
          return true; 
         }

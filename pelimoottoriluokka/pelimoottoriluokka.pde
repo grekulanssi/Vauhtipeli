@@ -91,7 +91,7 @@ class Pelimoottori {
     //tuhotaan piiloon menneet esineet
     for(int j = 0; j < this.esineet.size(); j ++) {
       Esine e = this.esineet.get(j);
-      if(e.y > (height +e.height)) {
+      if(e.y > (height+(e.korkeus/2)+40)) {
         esineet.remove(e);
       }
     }
