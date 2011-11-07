@@ -1,5 +1,5 @@
 abstract class Objekti {
-  //kaikki esineet mitä siinä näkyy  
+  //kaikki kama mitä pelissä näkyy, sekä mopo että esineet. 
   int x, y, leveys, korkeus;
   
   Objekti(int x, int y, int leveys, int korkeus) {
