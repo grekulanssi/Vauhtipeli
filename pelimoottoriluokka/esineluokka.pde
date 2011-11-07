@@ -7,11 +7,13 @@
 abstract class Esine extends Objekti {
   boolean kiva;
   PImage kuva;
+  int leveys, korkeus;
   
   public Esine(boolean onkoKiva, String tiedostonimi, int x, int y, int leveys, int korkeus) {
     super(x, y, leveys, korkeus);
     kiva = onkoKiva;
     kuva = loadImage(tiedostonimi);
+    this.leveys = leveys;
   }
     
   public boolean onKiva() {
@@ -105,6 +107,12 @@ class Piikkimatto extends Esine {
   
   public Piikkimatto(int x, int y) {
     super(false, "piikkimatto.png", x, y, int(random(20,41)), 10);
+    
+    @Override
+    void piirra() {
+      imageMode(CENTER);
+      image(kuva, x,y, leveys, korkeus);
+    }
   }
 
 }
