@@ -88,7 +88,13 @@ class Pelimoottori {
   
     }  
     
-    //TODO tuhoa piiloon menneet esineet
+    //tuhotaan piiloon menneet esineet
+    for(int j = 0; j < this.esineet.size(); j ++) {
+      Esine e = this.esineet.get(j);
+      if(e.y > (height +e.height)) {
+        esineet.remove(e);
+      }
+    }
   }
   
 }
