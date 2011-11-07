@@ -107,13 +107,11 @@ class Piikkimatto extends Esine {
   
   public Piikkimatto(int x, int y) {
     super(false, "piikkimatto.png", x, y, int(random(20,41)), 10);
-    
-    @Override
-    void piirra() {
+  }
+     void piirra() {
       imageMode(CENTER);
       image(kuva, x,y, leveys, korkeus);
     }
-  }
 
 }
 
