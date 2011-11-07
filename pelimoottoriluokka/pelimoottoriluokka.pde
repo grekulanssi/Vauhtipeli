@@ -83,7 +83,6 @@ class Pelimoottori {
     for (int i=0; i<this.esineet.size(); i++) {
       if (this.esineet.get(i).tormaako(this.mopo)) {
         gameover = true; 
-        println("JOU");
       }
   
     }  
@@ -91,7 +90,7 @@ class Pelimoottori {
     //tuhotaan piiloon menneet esineet
     for(int j = 0; j < this.esineet.size(); j ++) {
       Esine e = this.esineet.get(j);
-      if(e.y > (height +e.height)) {
+      if(e.y > (height +e.korkeus)) {
         esineet.remove(e);
       }
     }
