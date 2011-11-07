@@ -56,7 +56,7 @@ void calculatesums()
     }
     // looking for face color, if no other sample is defined
     else {
-      if((h < 20 || h > 230) && (s > 50 && s < 150) && b > 30) value = b;
+      if((h < 20 || h > 230) && (s > 50 && s < 150) && b > 30) value = b;
       else if(b > 200) value = 200;  // this is to include bright reflections on the skin
       else
       {
@@ -106,7 +106,7 @@ float correlate(int cx, int cy, int w, int h)
   // looking for a block centered at (cx,cy), use (x,y) for left-up corner of the block
   int x = cx - w/2;
   int y = cy - h/2;
-  if(x < 0 || y < 0 || x > numPixelsX-1-w || y > numPixelsY-1-h) return 0;
+  if(x < 0 || y < 0 || x > numPixelsX-1-w || y > numPixelsY-1-h) return 0;
   float c = (sums[x][y] + sums[x+w][y+h] - sums[x+w][y] - sums[x][y+h]);
   return c;
 }
@@ -114,7 +114,7 @@ float correlate(int cx, int cy, int w, int h)
 void optimize()
 // trying to make blobsize adaptive - doesn't work properly yet...
 {
-  if(blobW < 50 || blobW > 300) return;
+  if(blobW < 50 || blobW > 300) return;
   int blocksize;
   int tryX = (int)(blobW * 1.05);
   int tryY = (int)(blobH * 1.05);
