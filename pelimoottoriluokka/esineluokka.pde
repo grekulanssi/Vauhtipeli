@@ -37,7 +37,7 @@ abstract class Esine extends Objekti {
   
   public Esine annaRandomEsine() {
     float arpa = random(100);
-    int xArpa = random(50, 550);
+    int xArpa = (int)random(50, 550);
     Esine palautus = null;
     if(arpa < 30) {
       palautus = new Auto(xArpa, -50);

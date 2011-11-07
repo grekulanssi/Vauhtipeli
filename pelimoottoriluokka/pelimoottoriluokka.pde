@@ -25,6 +25,7 @@ class Pelimoottori {
   List<Esine> esineet;
   Mopo mopo;
   boolean gameover;
+  //Blobfinder blob;
   
   //Luodaan peli
   Pelimoottori() {
