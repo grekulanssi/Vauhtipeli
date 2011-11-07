@@ -1,3 +1,9 @@
+/*
+ * Esineitä on kaikki pelissä mopoa vastaan tuleva roina: Autot, lätäköt,
+ * jerrykannut ym. Jos jokin esine osuu mopoon, tapahtuu mopolle joko
+ * jotain positiivista tai sitten jotain kamalaa, esim. nopeus kasvaa/hidastuu.
+ */
+
 abstract class Esine extends Objekti {
   boolean kiva;
   PImage kuva;
@@ -62,6 +68,7 @@ class Auto extends Esine {
   
 }
 */
+
 class Piikkimatto extends Esine {
   
   public Piikkimatto(int x, int y) {
