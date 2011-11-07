@@ -4,7 +4,7 @@ Pakolliset processing-metodit
 Pelimoottori moottori;
 void setup() {
   size(600,650);
-  moottori = new Pelimoottori();
+  moottori = new Pelimoottori(this);
 }
 
 void draw() {
@@ -25,14 +25,15 @@ class Pelimoottori {
   List<Esine> esineet;
   Mopo mopo;
   boolean gameover;
-  //Blobfinder blob;
+  Blobfinder blob;
   
   //Luodaan peli
-  Pelimoottori() {
+  Pelimoottori(PApplet parent) {
     this.esineet = new ArrayList<Esine>(); 
     this.mopo = new Mopo(width/2, 450);    
     this.esineet.add(new Piikkimatto(200, 300));
     gameover = false;
+    this.blob = new Blobfinder(parent);
   }
    
   //Näppäintä on painettu
@@ -84,6 +85,10 @@ class Pelimoottori {
     
     siirraEsineita();
 
+    this.mopo.x = this.blob.annaBlobinX();
+    this.blob.preprocess();
+    println(this.blob.annaBlobinX());
+    
     //Piirretään objektit
     this.mopo.piirra();
     for (int i=0; i<this.esineet.size(); i++) {
