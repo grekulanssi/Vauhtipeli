@@ -3,7 +3,7 @@
  */
 
 
-color samplecolor = color(255,0,0);  // the color we are looking for (if zero, face color is a default)
+color samplecolor = color(185,0,0);  // the color we are looking for (if zero, face color is a default)
 
 int xcr, ycr; // center of a found blob
 
@@ -43,8 +43,12 @@ void draw()
   if(!videoready) return;
 
   findcorrelation(blobW,blobH, 0,numPixelsX, 0,numPixelsY);  // preprocessing
-    
+  
   background(0);
+  // Flipataan videokuva ja blob x-akselin suhteen
+  pushMatrix();
+  translate(width, 0); // vaihtaa origon paikkaa
+  scale(-1,1); // skaalataan pikselit
   image(cam, 0,0);
   
   if(showmode > 0)
@@ -92,8 +96,10 @@ void draw()
     calibratesize = false;
     }
   }
+  popMatrix(); // Matrix ulos
   videoready = false;
   speedmeter();
+  println(annaBlobinX()); // Printataan blobin korjatt x-koordinaatti
 }
 
 void speedmeter()
@@ -128,5 +134,12 @@ void keyPressed()
   if(key == '2') showmode = 2;
   if(key == '3') showmode = 3;
   if(key == 'c') calibratesize = true;
+}
+
+int annaBlobinX(){
+  
+  int x = xcr*(-1) + (width/2);
+  
+  return x;
 }
 
