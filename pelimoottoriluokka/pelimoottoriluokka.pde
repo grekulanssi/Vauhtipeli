@@ -29,7 +29,7 @@ class Pelimoottori {
   //Luodaan peli
   Pelimoottori() {
     this.esineet = new ArrayList<Esine>(); 
-    this.mopo = new Mopo(width/2, 600);    
+    this.mopo = new Mopo(width/2, 450);    
     this.esineet.add(new Piikkimatto(200, 300));
     gameover = false;
   }
@@ -64,6 +64,23 @@ class Pelimoottori {
     
     background(255);
     
+    /*
+    Piirretään laatikkohahmottelu
+    */
+    strokeWeight(0);
+    
+    //Sivut pensaita
+    rect(0,0,50,500);
+    rect(550,0,50,500);
+    
+    //Pelaajan kuva
+    rect(200,500,200,150);
+    
+    //Nurkkamittarit
+    fill(0,255,0);
+    rect(0,500,200,150);
+    rect(400,500,200,150);
+    
     siirraEsineita();
 
     //Piirretään objektit
@@ -91,7 +108,7 @@ class Pelimoottori {
     //tuhotaan piiloon menneet esineet
     for(int j = 0; j < this.esineet.size(); j ++) {
       Esine e = this.esineet.get(j);
-      if(e.y > (height+(e.korkeus/2)+40)) {
+      if(e.y > (500+(e.korkeus/2)+40)) {
         esineet.remove(e);
       }
     }
