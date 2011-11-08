@@ -14,6 +14,7 @@ abstract class Esine extends Objekti {
     kiva = onkoKiva;
     kuva = loadImage(tiedostonimi);
     this.leveys = leveys;
+    this.korkeus = korkeus;
   }
     
   public boolean onKiva() {
@@ -110,6 +111,7 @@ class Piikkimatto extends Esine {
   }
      void piirra() {
       imageMode(CENTER);
+      ellipse(x,y,10,10);
       image(kuva, x,y, leveys, korkeus);
     }
 

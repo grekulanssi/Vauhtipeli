@@ -53,7 +53,7 @@ class Blobfinder {
   
     findcorrelation(blobW,blobH, 0,numPixelsX, 0,numPixelsY);  // preprocessing
     
-    background(0);
+    //background(0);
     // Flipataan videokuva ja blob x-akselin suhteen
     pushMatrix();
     translate(width, 0); // vaihtaa origon paikkaa
@@ -108,8 +108,9 @@ class Blobfinder {
     popMatrix(); // Matrix ulos
     videoready = false;
     speedmeter();
-    println(annaBlobinX()); // Printataan blobin korjatt x-koordinaatti
+    //println(annaBlobinX()); // Printataan blobin korjatt x-koordinaatti
   }
+  
   
   void speedmeter()
   // visually show the frame time in tens of milliseconds, to check efficiency
@@ -151,4 +152,5 @@ class Blobfinder {
     
     return x;
   }
+  
 }

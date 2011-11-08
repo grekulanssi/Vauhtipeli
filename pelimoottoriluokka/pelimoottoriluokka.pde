@@ -76,18 +76,22 @@ class Pelimoottori {
     rect(550,0,50,500);
     
     //Pelaajan kuva
-    rect(200,500,200,150);
+    //rect(200,500,200,150);
+    imageMode(CORNER);
+    image(cam, 200, 500, 200, 150);
+    //this.blob.piirra();
     
     //Nurkkamittarit
     fill(0,255,0);
     rect(0,500,200,150);
     rect(400,500,200,150);
     
+    
     siirraEsineita();
 
     this.mopo.x = this.blob.annaBlobinX();
     this.blob.preprocess();
-    println(this.blob.annaBlobinX());
+    //println(this.blob.annaBlobinX());
     
     //Piirretään objektit
     this.mopo.piirra();
@@ -99,7 +103,7 @@ class Pelimoottori {
   void siirraEsineita() {
     //Piirretään esineet
     for (int i=0; i<this.esineet.size(); i++) {
-      this.esineet.get(i).y++;
+      this.esineet.get(i).y++; 
     }  
     
     //Tarkistetaan törmäykset
