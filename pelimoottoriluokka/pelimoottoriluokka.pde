@@ -26,6 +26,8 @@ class Pelimoottori {
   Mopo mopo;
   boolean gameover;
   Blobfinder blob;
+  int alkuaika;
+  boolean esineLisatty;
   
   //Luodaan peli
   Pelimoottori(PApplet parent) {
@@ -35,6 +37,9 @@ class Pelimoottori {
     //this.esineet.
     gameover = false;
     this.blob = new Blobfinder(parent);
+    this.alkuaika = millis();
+    this.esineLisatty = false;
+
   }
    
   //Näppäintä on painettu
@@ -60,6 +65,7 @@ class Pelimoottori {
   //Piirretään pelin tilanne
   void piirra() {
     
+    int kulunutAika = (int) (millis() - this.alkuaika) / 1000;   
     //Jos gameover niin ei piirretä
     if (this.gameover) {
       return;
@@ -67,9 +73,8 @@ class Pelimoottori {
     
     background(255);
     
-    /*
-    Piirretään laatikkohahmottelu
-    */
+    
+    //Piirretään laatikkohahmottelu
     strokeWeight(0);
     
     //Sivut pensaita
@@ -98,6 +103,14 @@ class Pelimoottori {
     for (int i=0; i<this.esineet.size(); i++) {
       this.esineet.get(i).piirra(); 
     }
+    if ((kulunutAika % 5) == 0 && this.esineLisatty == false){
+      esineet.add(annaRandomEsine());
+      this.esineLisatty = true;
+    }
+    else {
+      this.esineLisatty = false;
+    }
+    println("kulunutAika: " + kulunutAika);
   }
   
   void siirraEsineita() {
@@ -121,6 +134,28 @@ class Pelimoottori {
         esineet.remove(e);
       }
     }
+  }
+  // Antaa satunnaisen uuden esineen.
+  public Esine annaRandomEsine() {
+    float arpa = random(100);
+    int xArpa = int(random(50, 550));
+    Esine palautus = null;
+    if(arpa < 30) {
+      palautus = new Auto(xArpa, -50);
+    }
+    else if(arpa < 50) {
+      palautus = new Oljylatakko(xArpa, -50);
+    }
+    else if(arpa < 70) {
+      palautus = new Jerrykannu(xArpa, -50);
+    }
+    else if(arpa < 90) {
+      palautus = new Piikkimatto(xArpa, -50);
+    }
+    else {
+      palautus = new Ilokaasu(xArpa, -50);
+    }  
+    return palautus;
   }
   
 }
