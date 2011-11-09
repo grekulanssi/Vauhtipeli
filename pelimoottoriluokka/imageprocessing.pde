@@ -111,20 +111,5 @@ float correlate(int cx, int cy, int w, int h)
   return c;
 }
 
-void optimize()
-// trying to make blobsize adaptive - doesn't work properly yet...
-{
-  if(blobW < 50 || blobW > 300) return;
-  int blocksize;
-  int tryX = (int)(blobW * 1.05);
-  int tryY = (int)(blobH * 1.05);
-  blocksize = tryX * tryY;
-  float c = correlate(xcr,ycr, tryX,tryY) / blocksize - average;
-  if(c > maxcr) { blobW = tryX; blobH = tryY; return; }
-  tryX = (int)(blobW * 0.95);
-  tryY = (int)(blobH * 0.95);
-  blocksize = tryX * tryY;
-  c = correlate(xcr,ycr, tryX,tryY) / blocksize - average;
-  if(c > maxcr) { blobW = tryX; blobH = tryY; }
-}
+
 

@@ -3,16 +3,14 @@
  */
 
 
-  color samplecolor = color(185,0,0);  // the color we are looking for (if zero, face color is a default)
+  color samplecolor = color(165,169,144);//color(185,0,0);  // the color we are looking for (if zero, face color is a default)
   
   int xcr, ycr; // center of a found blob
   
-  int showmode = 0;  // 0 = original image, 1 = pixels with found color, 2 = cumulative sums, 3 = correlation with searched blob
   boolean HALFSIZE = true;
   boolean calibratesize = false;
   
-  int blobW, blobH;  // size of colored block to be searched for
-  
+  int blobW, blobH;  // size of colored block to be searched for  
   int time;
   
 class Blobfinder {
@@ -40,13 +38,54 @@ class Blobfinder {
     time = millis();
   }
   
+  /*
   void preprocess() {
     if(!videoready) return;
   
     findcorrelation(blobW,blobH, 0,numPixelsX, 0,numPixelsY);  // preprocessing
   }
+  */
   
+  void piirraLaatikko(int x, int y) {
+    
+    if(!videoready) return;
   
+    findcorrelation(blobW,blobH, 0,numPixelsX, 0,numPixelsY);  // preprocessing
+    
+    imageMode(CORNER);
+    pushMatrix();
+    translate(width, 0); // vaihtaa origon paikkaa
+    scale(-1,1); // skaalataan pikselit
+    image(cam, x, y, 200, 150);
+    
+    
+        // if a blob is found, show it
+    if(xcr > 0) {
+      //siirretään blob kohdilleen
+      xcr = x+xcr;
+      ycr = y+ycr;
+      println(xcr + " " + ycr);
+      fill(255,255,50,100);
+      ellipse(xcr,ycr, 10,10);
+      stroke(255,255,50);
+      noFill();
+      beginShape();
+      vertex(xcr-blobW/2, ycr-blobH/2);
+      vertex(xcr-blobW/2, ycr+blobH/2);
+      vertex(xcr+blobW/2, ycr+blobH/2);
+      vertex(xcr+blobW/2, ycr-blobH/2);
+      endShape(CLOSE);
+      noStroke();
+    }
+      
+      
+    popMatrix();
+    
+    
+
+  }
+  
+  /*
   void piirra()
   {
     if(!videoready) return;
@@ -60,15 +99,7 @@ class Blobfinder {
     scale(-1,1); // skaalataan pikselit
     image(cam, 0,0);
     
-    if(showmode > 0)
-    for (int j = 0; j < numPixelsY; j++) {
-      for (int i = 0; i < numPixelsX; i++) {
-        if(showmode == 1) stroke(bw[i][j]);
-        if(showmode == 2) stroke(255 * sums[i][j]/total);
-        if(showmode == 3) stroke(255*(correl[i][j] - mincr)/(maxcr-mincr));
-        point(i,j);
-      }
-    }
+    
     // if a blob is found, show it
     if(xcr > 0) {
       fill(255,255,50,100);
@@ -107,44 +138,10 @@ class Blobfinder {
     }
     popMatrix(); // Matrix ulos
     videoready = false;
-    speedmeter();
     //println(annaBlobinX()); // Printataan blobin korjatt x-koordinaatti
   }
   
-  
-  void speedmeter()
-  // visually show the frame time in tens of milliseconds, to check efficiency
-  {
-    int now = millis();
-    int frametime = now - time;
-    time = now;
-    if(frametime < 0) frametime += 1000;
-    int tens = frametime / 10;
-    // println(tens+" "+frametime);
-    for(int i=0;i<tens;i++) {
-      noStroke();
-      fill(0,255,0);             // <  50ms / frame is optimal
-      if(i > 5) fill(255,255,0);
-      if(i > 10) fill(255,0,0);  // > 100ms / frame gets bad
-      rect(width-5,20*i, 5,5);
-     }
-  }
-  
-  
-  void mousePressed()
-  {
-    if(showmode > 0) return;
-    // store the color of pointed pixel as a new search reference
-    else samplecolor = myMovieColors[mouseY*numPixelsX + mouseX];
-  }
-  void keyPressed()
-  {
-    if(key == '0') showmode = 0;
-    if(key == '1') showmode = 1;
-    if(key == '2') showmode = 2;
-    if(key == '3') showmode = 3;
-    if(key == 'c') calibratesize = true;
-  }
+  */
   
   int annaBlobinX(){
     
