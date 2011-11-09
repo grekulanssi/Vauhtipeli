@@ -63,15 +63,8 @@ class Oljylatakko extends Esine {
 
 class Auto extends Esine {
   
-  boolean vastaantulija;
-  
-  public Auto(int x, int y) {
+  public Auto(int x, int y, boolean vastaantulija) {
     super(false, "auto.png", x, y, 70, 40);
-    if(random(2) < 1) {
-      vastaantulija = true;
-    } else {
-     vastaantulija = false;
-    }
     if(vastaantulija) {
       kuva = loadImage("auto_v.png");
     }
