@@ -82,8 +82,8 @@ class Pelimoottori {
 
     imageMode(CORNER);
     //Piirretään tausta jatkuvana
-    image(taustakuva, 50,this.piirtolaskuri%500, 500,500);
-    image(taustakuva, 50,this.piirtolaskuri%500-500, 500,500);
+    image(taustakuva, 0,this.piirtolaskuri%500, 600,500);
+    image(taustakuva, 0,this.piirtolaskuri%500-500, 600,500);
     imageMode(CENTER);
     
     strokeWeight(0);
@@ -96,27 +96,19 @@ class Pelimoottori {
     //valkoset kaistaviivat jatkuvana
     fill(240,240,240,240);
     for(int v = 0; v < 6; v++) {
-      rect(width/4-6,(v*100)+this.piirtolaskuri%500, 20,60);
-      rect(width/4-6,(v*100)+this.piirtolaskuri%500-500, 20,60);
+      rect(width/4+4,(v*100)+this.piirtolaskuri%500, 20,60);
+      rect(width/4+4,(v*100)+this.piirtolaskuri%500-500, 20,60);
       
-      rect(width*3/4-18,(v*100)+this.piirtolaskuri%500, 20,60);
-      rect(width*3/4-18,(v*100)+this.piirtolaskuri%500-500, 20,60);
+      rect(width*3/4-28,(v*100)+this.piirtolaskuri%500, 20,60);
+      rect(width*3/4-28,(v*100)+this.piirtolaskuri%500-500, 20,60);
     }
-
-    //Piirretään laatikkohahmottelu
-    
-    //Sivut pensaita
-    fill(150,255,100,255);
-    rect(0,0,50,500);
-    rect(550,0,50,500);
     
     //Pelaajan kuva
-    //rect(200,500,200,150);
     this.blob.piirraLaatikko(200, 500);
 
     //this.blob.piirra();
     
-    //Nurkkamittarit
+    //Nurkkamittarit TODO
     fill(0,255,0);
     rect(0,500,200,150);
     rect(400,500,200,150);
