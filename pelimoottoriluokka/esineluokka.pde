@@ -47,8 +47,6 @@ class Jerrykannu extends Esine {
 }
 
 class Ilokaasu extends Esine {
-    //boolean onkoKiva, String tiedostonimi, int x, int y, int leveys, int korkeus
-
   public Ilokaasu(int x, int y) {
     super(true, "ilokaasu.png", x, y, 25, 25);
   }
@@ -80,7 +78,6 @@ class Piikkimatto extends Esine {
   }
      void piirra() {
       imageMode(CENTER);
-      ellipse(x,y,10,10);
       image(kuva, x,y, leveys, korkeus);
     }
 
