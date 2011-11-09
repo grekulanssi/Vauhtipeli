@@ -33,6 +33,7 @@ class Pelimoottori {
     this.esineet = new ArrayList<Esine>(); 
     this.mopo = new Mopo(width/2, 450);    
     this.esineet.add(new Piikkimatto(200, 300));
+    //this.esineet.
     gameover = false;
     this.blob = new Blobfinder(parent);
     this.viimeisinLisays = millis() / 1000;
@@ -79,8 +80,8 @@ class Pelimoottori {
     
     //Pelaajan kuva
     //rect(200,500,200,150);
-    imageMode(CORNER);
-    image(cam, 200, 500, 200, 150);
+    this.blob.piirraLaatikko(200, 500);
+
     //this.blob.piirra();
     
     //Nurkkamittarit
@@ -92,7 +93,6 @@ class Pelimoottori {
     siirraEsineita();
 
     this.mopo.x = this.blob.annaBlobinX();
-    this.blob.preprocess();
     //println(this.blob.annaBlobinX());
     
     //Piirretään objektit
