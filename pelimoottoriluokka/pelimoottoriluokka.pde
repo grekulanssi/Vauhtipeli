@@ -25,6 +25,12 @@ class Pelimoottori {
   Blobfinder blob;
   int viimeisinLisays;
   
+  /* taustalla näkyvä asvaltti talletetaan attribuuttiin
+   * nos tarkoittaa ilokaasua (jos et tienny niin katso Hurjapäät-leffa)
+   */
+  PImage taustakuva;
+  PImage taustakuva_nos;
+  
   //Luodaan peli
   Pelimoottori(PApplet parent) {
     this.esineet = new ArrayList<Esine>(); 
@@ -34,6 +40,9 @@ class Pelimoottori {
     gameover = false;
     this.blob = new Blobfinder(parent);
     this.viimeisinLisays = millis() / 1000;
+    
+    taustakuva = loadImage("asvaltti.png");
+    taustakuva_nos = loadImage("asvaltti_nos.png");
 
   }
    
@@ -67,6 +76,9 @@ class Pelimoottori {
     
     background(255);
     
+    imageMode(CORNER);
+    image(taustakuva, 50,0, 500,500);
+    imageMode(CENTER);
     
     //Piirretään laatikkohahmottelu
     strokeWeight(0);
