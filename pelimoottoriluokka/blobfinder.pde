@@ -24,10 +24,8 @@ class Blobfinder {
     cam = new Capture(parent, 200, 150);
   
     // default blob size (useful for nearby face)
-    blobW = (int) (0.22 * width);
-    blobH = (int) (0.4 * height);
-    
-    blobW = blobH = 50;
+    blobW = (int) (0.15 * width);
+    blobH = (int) (0.20 * height);
   
     numPixelsX = width;
     numPixelsY = height;
