@@ -79,10 +79,13 @@ class Pelimoottori {
     
     background(255);
     
+
     imageMode(CORNER);
-    image(taustakuva, 50,0, 500,500);
+    //Piirretään tausta jatkuvana
+    image(taustakuva, 50,this.piirtolaskuri%500, 500,500);
+    image(taustakuva, 50,this.piirtolaskuri%500-500, 500,500);
     imageMode(CENTER);
-    
+     
     //Piirretään laatikkohahmottelu
     strokeWeight(0);
     
@@ -138,8 +141,19 @@ class Pelimoottori {
       Esine tamaesine = this.esineet.get(i);
       if (tamaesine instanceof Auto) {
         Auto auto = (Auto)tamaesine;
-        auto.y++; 
-        auto.y++; 
+        
+        
+        if (auto.onkoVastaantulija()) {
+          //Vastaantulijoita siirretään kolme pikseliä
+          auto.y++; auto.y++; auto.y++; 
+        }
+        else {
+          //Siirretään auto joka toisella piirtokerralla pikseli
+          if (this.piirtolaskuri % 2 == 0) {
+            auto.y++; 
+          }
+          
+        }
       }
       else {
         tamaesine.y++; 
