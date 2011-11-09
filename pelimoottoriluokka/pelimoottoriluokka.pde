@@ -97,7 +97,7 @@ class Pelimoottori {
     for (int i=0; i<this.esineet.size(); i++) {
       this.esineet.get(i).piirra(); 
     }
-    if ((millis()/1000) - this.viimeisinLisays >= 5) {
+    if ((millis()/1000) - this.viimeisinLisays >= 1) {
       esineet.add(annaRandomEsine());
       this.viimeisinLisays = (millis() / 1000);
       
@@ -142,23 +142,83 @@ class Pelimoottori {
   // Antaa satunnaisen uuden esineen.
   public Esine annaRandomEsine() {
     float arpa = random(100);
-    int xArpa = int(random(50, 550));
+    int xArpa1 = int(random(50, 165));
+    int xArpa2 = int(random(185, 300));
+    int xArpa3 = int(random(315, 420));
+    int xArpa4 = int(random(435, 550));
+    float kaistaArpa  = random(4);  
     Esine palautus = null;
-    if(arpa < 1000) {
-      palautus = new Auto(xArpa, -50);
+    if(arpa < 50) {
+      
+      if (kaistaArpa < 1){
+      palautus = new Auto(xArpa1, -50, true);
+      }
+      else if (kaistaArpa < 2){
+      palautus = new Auto(xArpa2, -50, true);
+      }
+      else if (kaistaArpa < 3){
+      palautus = new Auto(xArpa3, -50, false);
+      }
+      else {
+      palautus = new Auto(xArpa4, -50, false);
+      }
     }
     else if(arpa < 50) {
-      palautus = new Oljylatakko(xArpa, -50);
+        
+      if (kaistaArpa < 1){
+      palautus = new Oljylatakko(xArpa1, -50);
+      }
+      else if (kaistaArpa < 2){
+      palautus = new Oljylatakko(xArpa2, -50);
+      }
+      else if (kaistaArpa < 3){
+      palautus = new Oljylatakko(xArpa3, -50);
+      }
+      else {
+      palautus = new Oljylatakko(xArpa4, -50);
+      }
     }
-    else if(arpa < 70) {
-      palautus = new Jerrykannu(xArpa, -50);
-    }
-    else if(arpa < 90) {
-      palautus = new Piikkimatto(xArpa, -50);
+     
+    else if(arpa < 50) {
+       if (kaistaArpa < 1){
+      palautus = new Jerrykannu(xArpa1, -50);
+      }
+      else if (kaistaArpa < 2){
+      palautus = new Jerrykannu(xArpa2, -50);
+      }
+      else if (kaistaArpa < 3){
+      palautus = new Jerrykannu(xArpa3, -50);
+      }
+      else {
+      palautus = new Jerrykannu(xArpa4, -50);
+      }
+    else if(arpa < 1000) {
+       if (kaistaArpa < 1){
+      palautus = new Piikkimatto(xArpa1, -50);
+      }
+      else if (kaistaArpa < 2){
+      palautus = new Piikkimatto(xArpa2, -50);
+      }
+      else if (kaistaArpa < 3){
+      palautus = new Piikkimatto(xArpa3, -50);
+      }
+      else {
+      palautus = new Piikkimatto(xArpa4, -50);
+      }
     }
     else {
-      palautus = new Ilokaasu(xArpa, -50);
-    }  
+      if (kaistaArpa < 1){
+      palautus = new Ilokaasu(xArpa1, -50);
+      }
+      else if (kaistaArpa < 2){
+      palautus = new Ilokaasu(xArpa2, -50);
+      }
+      else if (kaistaArpa < 3){
+      palautus = new Ilokaasu(xArpa3, -50);
+      }
+      else {
+      palautus = new Ilokaasu(xArpa4, -50);
+      }  
     return palautus;
   }
   
