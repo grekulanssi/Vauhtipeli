@@ -24,6 +24,7 @@ class Pelimoottori {
   boolean gameover;
   Blobfinder blob;
   int viimeisinLisays;
+  int piirtolaskuri; //montako kertaa piirretty
   
   /* taustalla näkyvä asvaltti talletetaan attribuuttiin
    * nos tarkoittaa ilokaasua (jos et tienny niin katso Hurjapäät-leffa)
@@ -68,6 +69,8 @@ class Pelimoottori {
   
   //Piirretään pelin tilanne
   void piirra() {
+    
+    piirtolaskuri++;
     
     //Jos gameover niin ei piirretä
     if (this.gameover) {
@@ -132,7 +135,16 @@ class Pelimoottori {
   void siirraEsineita() {
     //Piirretään esineet
     for (int i=0; i<this.esineet.size(); i++) {
-      this.esineet.get(i).y++; 
+      Esine tamaesine = this.esineet.get(i);
+      if (tamaesine instanceof Auto) {
+        Auto auto = (Auto)tamaesine;
+        auto.y++; 
+        auto.y++; 
+      }
+      else {
+        tamaesine.y++; 
+      }
+        
     }  
     
     //Tarkistetaan törmäykset
