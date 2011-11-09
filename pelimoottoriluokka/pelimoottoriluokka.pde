@@ -100,7 +100,7 @@ class Pelimoottori {
     for (int i=0; i<this.esineet.size(); i++) {
       this.esineet.get(i).piirra(); 
     }
-    if ((millis()/1000) - this.viimeisinLisays >= 1) {
+    if ((millis()/1000) - this.viimeisinLisays >= 3) {
       esineet.add(annaRandomEsine());
       this.viimeisinLisays = (millis() / 1000);
       
@@ -138,8 +138,8 @@ class Pelimoottori {
     int xArpa4 = int(random(435, 550));
     float kaistaArpa  = random(4);  
     Esine palautus = null;
-    if(arpa < 50) {
-      
+    
+    if(arpa < 50) {  
       if (kaistaArpa < 1){
       palautus = new Auto(xArpa1, -50, true);
       }
@@ -182,18 +182,13 @@ class Pelimoottori {
       else {
       palautus = new Jerrykannu(xArpa4, -50);
       }
+    }
     else if(arpa < 1000) {
-       if (kaistaArpa < 1){
-      palautus = new Piikkimatto(xArpa1, -50);
-      }
-      else if (kaistaArpa < 2){
-      palautus = new Piikkimatto(xArpa2, -50);
-      }
-      else if (kaistaArpa < 3){
-      palautus = new Piikkimatto(xArpa3, -50);
+       if (kaistaArpa < 2){
+      palautus = new Piikkimatto(100, -50);
       }
       else {
-      palautus = new Piikkimatto(xArpa4, -50);
+      palautus = new Piikkimatto(490, -50);
       }
     }
     else {
@@ -208,10 +203,10 @@ class Pelimoottori {
       }
       else {
       palautus = new Ilokaasu(xArpa4, -50);
-      }  
+      }
+    }
     return palautus;
   }
-  
 }
 
 
