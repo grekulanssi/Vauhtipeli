@@ -103,12 +103,12 @@ class Pelimoottori {
     for (int i=0; i<this.esineet.size(); i++) {
       this.esineet.get(i).piirra(); 
     }
-    if (((kulunutAika - alkuaika) % 5) == 0 && esineLisatty == false){
-      annaRandomEsine();
-      esineLisatty = true;
+    if ((kulunutAika % 5) == 0 && this.esineLisatty == false){
+      esineet.add(annaRandomEsine());
+      this.esineLisatty = true;
     }
     else {
-      esineLisatty = false;
+      this.esineLisatty = false;
     }
     println("kulunutAika: " + kulunutAika);
   }
@@ -154,8 +154,7 @@ class Pelimoottori {
     }
     else {
       palautus = new Ilokaasu(xArpa, -50);
-    }
-       
+    }  
     return palautus;
   }
   
