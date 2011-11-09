@@ -85,11 +85,28 @@ class Pelimoottori {
     image(taustakuva, 50,this.piirtolaskuri%500, 500,500);
     image(taustakuva, 50,this.piirtolaskuri%500-500, 500,500);
     imageMode(CENTER);
-     
-    //Piirretään laatikkohahmottelu
+    
     strokeWeight(0);
     
+    //Keltaiset keskiviivat
+    fill(190,180,10,200);
+    rect(width/2-26,0, 20,500);
+    rect(width/2+2,0, 20,500);
+    
+    //valkoset kaistaviivat jatkuvana
+    fill(240,240,240,240);
+    for(int v = 0; v < 6; v++) {
+      rect(width/4-6,(v*100)+this.piirtolaskuri%500, 20,60);
+      rect(width/4-6,(v*100)+this.piirtolaskuri%500-500, 20,60);
+      
+      rect(width*3/4-18,(v*100)+this.piirtolaskuri%500, 20,60);
+      rect(width*3/4-18,(v*100)+this.piirtolaskuri%500-500, 20,60);
+    }
+
+    //Piirretään laatikkohahmottelu
+    
     //Sivut pensaita
+    fill(150,255,100,255);
     rect(0,0,50,500);
     rect(550,0,50,500);
     
