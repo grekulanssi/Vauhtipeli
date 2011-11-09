@@ -26,8 +26,7 @@ class Pelimoottori {
   Mopo mopo;
   boolean gameover;
   Blobfinder blob;
-  int alkuaika;
-  boolean esineLisatty;
+  int viimeisinLisays;
   
   //Luodaan peli
   Pelimoottori(PApplet parent) {
@@ -37,8 +36,7 @@ class Pelimoottori {
     //this.esineet.
     gameover = false;
     this.blob = new Blobfinder(parent);
-    this.alkuaika = millis();
-    this.esineLisatty = false;
+    this.viimeisinLisays = millis() / 1000;
 
   }
    
@@ -65,7 +63,6 @@ class Pelimoottori {
   //Piirretään pelin tilanne
   void piirra() {
     
-    int kulunutAika = (int) (millis() - this.alkuaika) / 1000;   
     //Jos gameover niin ei piirretä
     if (this.gameover) {
       return;
@@ -103,14 +100,11 @@ class Pelimoottori {
     for (int i=0; i<this.esineet.size(); i++) {
       this.esineet.get(i).piirra(); 
     }
-    if ((kulunutAika % 5) == 0 && this.esineLisatty == false){
+    if ((millis()/1000) - this.viimeisinLisays >= 5) {
       esineet.add(annaRandomEsine());
-      this.esineLisatty = true;
+      this.viimeisinLisays = (millis() / 1000);
+      
     }
-    else {
-      this.esineLisatty = false;
-    }
-    println("kulunutAika: " + kulunutAika);
   }
   
   void siirraEsineita() {
@@ -140,7 +134,7 @@ class Pelimoottori {
     float arpa = random(100);
     int xArpa = int(random(50, 550));
     Esine palautus = null;
-    if(arpa < 30) {
+    if(arpa < 1000) {
       palautus = new Auto(xArpa, -50);
     }
     else if(arpa < 50) {
