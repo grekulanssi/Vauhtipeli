@@ -19,8 +19,14 @@ class Blobfinder {
   {
     //if(HALFSIZE) size(320,240);  // this is faster
     //else size(640, 480, P2D);
-    cam = new Capture(parent, 200, 150);
-  
+    // Meniskö se poikkeuksen nappaaminen näin?
+    try {
+      cam = new Capture(parent, 200, 150);
+    }
+    catch(Exception eiWebKameraa) {
+      System.err.println("Web- tai muuta kameraa ei löydetty!");
+      return;
+    }
     // default blob size (useful for nearby face)
     blobW = (int) (20);
     blobH = (int) (20);
