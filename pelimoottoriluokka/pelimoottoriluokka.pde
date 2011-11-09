@@ -92,7 +92,7 @@ class Pelimoottori {
     
     siirraEsineita();
 
-    this.mopo.x = this.blob.annaBlobinX();
+    this.mopo.x = width/2+this.blob.annaBlobinX()*3;
     //println(this.blob.annaBlobinX());
     
     //Piirretään objektit
