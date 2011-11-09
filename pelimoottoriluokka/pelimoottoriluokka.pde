@@ -11,9 +11,6 @@ void draw() {
   moottori.piirra();
 }
 
-void keyPressed() {
-  moottori.painettu();
-}
 
 
 /*
@@ -92,7 +89,7 @@ class Pelimoottori {
     
     siirraEsineita();
 
-    this.mopo.x = width/2+this.blob.annaBlobinX()*3;
+    this.mopo.x = this.laskeMoponX();
     //println(this.blob.annaBlobinX());
     
     //Piirretään objektit
@@ -106,6 +103,19 @@ class Pelimoottori {
       
     }
   }
+  
+  int laskeMoponX() {
+      int vanhax = this.mopo.x;
+      int kallistusx = this.blob.annaBlobinX()/10;
+      int uusix = vanhax + kallistusx;
+      
+      if (uusix < 60)
+        uusix = 60;
+      if (uusix > 540)
+        uusix = 540;
+      return uusix;
+  }
+  
   
   void siirraEsineita() {
     //Piirretään esineet
