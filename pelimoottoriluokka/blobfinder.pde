@@ -3,7 +3,7 @@
  */
 
 
-  color samplecolor = color(165,169,144);//color(185,0,0);  // the color we are looking for (if zero, face color is a default)
+  color samplecolor = color(255,158,69);//color(185,0,0);  // the color we are looking for (if zero, face color is a default)
   
   int xcr, ycr; // center of a found blob
   

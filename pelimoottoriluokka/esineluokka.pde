@@ -76,7 +76,7 @@ class Auto extends Esine {
 class Piikkimatto extends Esine {
   
   public Piikkimatto(int x, int y) {
-    super(false, "piikkimatto.png", x, y, int(random(20,41)), 10);
+    super(false, "piikkimatto.png", x, y, int(random(30,81)), 15);
   }
      void piirra() {
       imageMode(CENTER);
