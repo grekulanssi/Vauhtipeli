@@ -24,7 +24,8 @@ class Pelimoottori {
   boolean gameover;
   Blobfinder blob;
   int viimeisinLisays;
-  int piirtolaskuri; //montako kertaa piirretty
+  int aloitusaika;
+  int piirtolaskuri; //käytetään taustan rullaamiseen
   PImage aloituskuva;
   PImage aloitusnappi;
   boolean piirrapeli;
@@ -76,9 +77,10 @@ class Pelimoottori {
   
   void piirra() {
     if (mousePressed && mouseX <= 360 && mouseX >= 240 && 
-          mouseY >= 550-17 && mouseY <= 550+17) {
+          mouseY >= 550 && mouseY <= 550+33) {
       samplecolor = this.blob.annaKeskipisteenVari();
       piirrapeli = true;
+      this.aloitusaika = millis()/1000;
     }
       
       
@@ -116,12 +118,16 @@ class Pelimoottori {
   //Piirretään pelin tilanne
   void piirraPeli() {
     
+    //piirtolaskuria käytetään taustan rullaamiseen
+    //se ei näytä välttämättä oikeaa piirtokertojen määrää
     piirtolaskuri = piirtolaskuri + this.nopeuskerroin;
     
     //Jos gameover niin ei piirretä
     if (this.gameover) {
       return;
     }
+    
+    this.nopeuskerroin = ((millis()/1000) - this.aloitusaika)/5+1;
     
     background(255);
     
