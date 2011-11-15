@@ -25,7 +25,6 @@ class Mopo extends Objekti {
     }
   }
     
-  
   void piirra() {//TODO: switch näyttäs kivemmalta!
     ImageMode(CENTER);
     if(moponTila == SUORAAN) {
@@ -40,6 +39,7 @@ class Mopo extends Objekti {
           //TÄHÄN KUVAN PEILAUS!
           image(kuva_k, x,y);
         }
+      }
     }
     /*fill(255,0,0);
     ellipseMode(CENTER);
