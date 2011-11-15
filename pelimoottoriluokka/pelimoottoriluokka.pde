@@ -24,7 +24,12 @@ class Pelimoottori {
   boolean gameover;
   Blobfinder blob;
   int viimeisinLisays;
-  int piirtolaskuri; //montako kertaa piirretty
+  int aloitusaika;
+  int piirtolaskuri; //käytetään taustan rullaamiseen
+  PImage aloituskuva;
+  PImage aloitusnappi;
+  boolean piirrapeli;
+  int nopeuskerroin = 1;
   
   /* taustalla näkyvä asvaltti talletetaan attribuuttiin
    * nos tarkoittaa ilokaasua (jos et tienny niin katso Hurjapäät-leffa)
@@ -41,9 +46,12 @@ class Pelimoottori {
     gameover = false;
     this.blob = new Blobfinder(parent);
     this.viimeisinLisays = millis() / 1000;
+    this.piirrapeli = false;
     
     taustakuva = loadImage("asvaltti.png");
     taustakuva_nos = loadImage("asvaltti_nos.png");
+    aloituskuva = loadImage("start.png");
+    aloitusnappi = loadImage("startbutton.png");
 
   }
    
@@ -67,15 +75,59 @@ class Pelimoottori {
     }
   }
   
-  //Piirretään pelin tilanne
   void piirra() {
+    if (mousePressed && mouseX <= 360 && mouseX >= 240 && 
+          mouseY >= 550 && mouseY <= 550+33) {
+      samplecolor = this.blob.annaKeskipisteenVari();
+      piirrapeli = true;
+      this.aloitusaika = millis()/1000;
+    }
+      
+      
+    if (piirrapeli)
+      piirraPeli(); 
+    else
+      piirraValikko();
+  }
+  
+  void piirraValikko() {
     
-    piirtolaskuri++;
+    image(aloituskuva,0,0);
+    
+    //videokuva
+    this.blob.piirraLaatikko(200,230, true);
+    
+    //keskelle merkki
+    int merkinPituus = 10;
+    stroke(255,255,255);
+    //pysty
+    line(300,305-merkinPituus,300,305+merkinPituus);
+    //vaaka
+    line(300-merkinPituus,305,300+merkinPituus,305);
+    stroke(0);
+    
+    //nenänvärilaatikko
+    color nena = this.blob.annaKeskipisteenVari();
+    fill(nena);    
+    rect(250,415,100,100);
+    
+    //aloitusnappi
+    image(aloitusnappi, 240, 550);
+  }
+  
+  //Piirretään pelin tilanne
+  void piirraPeli() {
+    
+    //piirtolaskuria käytetään taustan rullaamiseen
+    //se ei näytä välttämättä oikeaa piirtokertojen määrää
+    piirtolaskuri = piirtolaskuri + this.nopeuskerroin;
     
     //Jos gameover niin ei piirretä
     if (this.gameover) {
       return;
     }
+    
+    this.nopeuskerroin = ((millis()/1000) - this.aloitusaika)/5+1;
     
     background(255);
     
@@ -104,7 +156,7 @@ class Pelimoottori {
     }
     
     //Pelaajan kuva
-    this.blob.piirraLaatikko(200, 500);
+    this.blob.piirraLaatikko(200, 500, true);
 
     //this.blob.piirra();
     
@@ -150,22 +202,24 @@ class Pelimoottori {
       Esine tamaesine = this.esineet.get(i);
       if (tamaesine instanceof Auto) {
         Auto auto = (Auto)tamaesine;
-        
-        
+
         if (auto.onkoVastaantulija()) {
           //Vastaantulijoita siirretään kolme pikseliä
-          auto.y++; auto.y++; auto.y++; 
+          auto.y = auto.y+2*this.nopeuskerroin;
         }
         else {
           //Siirretään auto joka toisella piirtokerralla pikseli
-          if (this.piirtolaskuri % 2 == 0) {
-            auto.y++; 
+          if (this.nopeuskerroin == 1 && this.piirtolaskuri % 2 == 0) {
+            auto.y++;
+          }
+          else {
+            auto.y = auto.y+this.nopeuskerroin/2;
           }
           
         }
       }
       else {
-        tamaesine.y++; 
+        tamaesine.y = tamaesine.y+this.nopeuskerroin;; 
       }
         
     }  

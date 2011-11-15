@@ -50,7 +50,7 @@ class Blobfinder {
   }
   */
   
-  void piirraLaatikko(int x, int y) {
+  void piirraLaatikko(int x, int y, boolean piirretaankoBlobi) {
     
     if(!videoready) return;
   
@@ -64,7 +64,7 @@ class Blobfinder {
     
     
         // if a blob is found, show it
-    if(xcr > 0) {
+    if(xcr > 0 && piirretaankoBlobi) {
       //siirretään blob kohdilleen
       xcr = x+xcr;
       ycr = y+ycr;
@@ -154,4 +154,24 @@ class Blobfinder {
     return x;
   }
   
+  color annaKeskipisteenVari() {
+    //Haetaan keskipisteen väri
+    
+    //Otetaan keskiarvo muutaman pikselin alueelta
+    int area = 1;
+    int numberOfPixels = (2*area+1)*2;
+    
+    //haetaan keskimääräisväri 3x3 pixelin alueelta
+    int reds = 0, greens = 0, blues = 0;
+    for (int a=-area;a<=area;a++) {
+     for (int b=-area;b<=area;b++) {
+       color vari = myMovieColors[(75+a)*numPixelsX + (100+b)];
+       reds = reds + (int)red(vari);
+       greens = greens + (int)green(vari);
+       blues = blues + (int)blue(vari);
+     } 
+    }
+    return color(reds/numberOfPixels, greens/numberOfPixels, blues/numberOfPixels);
+    
+  }
 }
