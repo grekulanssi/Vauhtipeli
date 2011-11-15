@@ -210,7 +210,7 @@ class Pelimoottori {
       palautus = new Auto(xArpa4, -50, false);
       }
     }
-    else if(arpa < 50) {
+    else if(arpa < 70) {
         
       if (kaistaArpa < 1){
       palautus = new Oljylatakko(xArpa1, -50);
@@ -240,7 +240,7 @@ class Pelimoottori {
       palautus = new Jerrykannu(xArpa4, -50);
       }
     }
-    else if(arpa < 1000) {
+    else if(arpa < 100) {
        if (kaistaArpa < 2){
       palautus = new Piikkimatto(100, -50);
       }
