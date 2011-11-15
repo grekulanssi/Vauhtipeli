@@ -16,7 +16,7 @@ class Mopo extends Objekti {
    kuva_k = loadImage("mopo_k.png");
   }
   
-  public int asetaTila(int kaantyminen) {
+  public void asetaTila(int kaantyminen) {
     if(kaantyminen == SUORAAN || kaantyminen == VASEN || kaantyminen == OIKEA) {
       moponTila = kaantyminen;
     }
@@ -26,7 +26,7 @@ class Mopo extends Objekti {
   }
     
   void piirra() {//TODO: switch näyttäs kivemmalta!
-    ImageMode(CENTER);
+    imageMode(CENTER);
     if(moponTila == SUORAAN) {
       image(kuva, x,y);
     }
