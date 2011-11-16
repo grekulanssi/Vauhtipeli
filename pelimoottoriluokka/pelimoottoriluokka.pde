@@ -37,6 +37,8 @@ class Pelimoottori {
   PImage taustakuva;
   PImage taustakuva_nos;
   
+  boolean nos_mode;
+  
   //Luodaan peli
   Pelimoottori(PApplet parent) {
     this.esineet = new ArrayList<Esine>(); 
@@ -52,6 +54,8 @@ class Pelimoottori {
     taustakuva_nos = loadImage("asvaltti_nos.png");
     aloituskuva = loadImage("start.png");
     aloitusnappi = loadImage("startbutton.png");
+    
+    nos_mode = false;
 
   }
    
@@ -134,8 +138,14 @@ class Pelimoottori {
 
     imageMode(CORNER);
     //Piirretään tausta jatkuvana
-    image(taustakuva, 0,this.piirtolaskuri%500, 600,500);
-    image(taustakuva, 0,this.piirtolaskuri%500-500, 600,500);
+    if(nos_mode) {
+      image(taustakuva, 0,this.piirtolaskuri%500, 600,500);
+      image(taustakuva, 0,this.piirtolaskuri%500-500, 600,500);
+    }
+    else {
+      image(taustakuva_nos, 0,this.piirtolaskuri%500, 600,500);
+      image(taustakuva_nos, 0,this.piirtolaskuri%500-500, 600,500);
+    }
     imageMode(CENTER);
     
     strokeWeight(0);
