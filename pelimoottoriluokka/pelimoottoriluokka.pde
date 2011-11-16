@@ -12,7 +12,6 @@ void draw() {
 }
 
 
-
 /*
 Pelimoottori
 */
@@ -29,13 +28,15 @@ class Pelimoottori {
   PImage aloituskuva;
   PImage aloitusnappi;
   boolean piirrapeli;
-  int nopeuskerroin = 1;
+  int nopeuskerroin;
   
   /* taustalla näkyvä asvaltti talletetaan attribuuttiin
    * nos tarkoittaa ilokaasua (jos et tienny niin katso Hurjapäät-leffa)
    */
   PImage taustakuva;
   PImage taustakuvaNos;
+  PImage peliohi;
+  PImage restart;
   
   boolean nosMode;
   int nosKelloM;
@@ -43,23 +44,33 @@ class Pelimoottori {
   
   //Luodaan peli
   Pelimoottori(PApplet parent) {
-    this.esineet = new ArrayList<Esine>(); 
-    this.mopo = new Mopo(width/2, 450);    
-    this.esineet.add(new Piikkimatto(200, 300));
-    //this.esineet.
-    gameover = false;
     this.blob = new Blobfinder(parent);
-    this.viimeisinLisays = millis() / 1000;
-    this.piirrapeli = false;
-    
     taustakuva = loadImage("asvaltti.png");
-    taustakuvaNos = loadImage("asvaltti_nos.png");
+    taustakuva_nos = loadImage("asvaltti_nos.png");
     aloituskuva = loadImage("start.png");
     aloitusnappi = loadImage("startbutton.png");
+    peliohi = loadImage("gameover.png");
+    restart = loadImage("restart.png");
     
-    nosMode = false;
-    nosKello = 0;
-    nosKelloM = 0;
+    this.piirrapeli = false;
+    
+    this.uusiPeli();
+  }
+  
+ void uusiPeli() {
+    this.esineet = new ArrayList<Esine>(); 
+    this.mopo = new Mopo(width/2, 450);    
+    //this.esineet.add(new Piikkimatto(200, 300));
+    //this.esineet.
+    gameover = false;
+    this.nopeuskerroin = 1;
+    
+    this.viimeisinLisays = millis() / 1000;   
+    
+   nosMode = false;
+   nosKello = 0;
+   nosKelloM = 0;
+
 
   }
    
@@ -132,9 +143,22 @@ class Pelimoottori {
     
     //Jos gameover niin ei piirretä
     if (this.gameover) {
+            
+      //Piirretään lopputulos
+      imageMode(CENTER);
+      image(peliohi, width/2, 250);
+      image(restart, width/2, 350);
+      
+      if (mousePressed && mouseX >= (width/2)-96 && mouseX <= (width/2)+96 && 
+          mouseY >= 350-26 && mouseY <= 350+26) {
+            println("UUSI");
+            this.uusiPeli();
+      }
+      
       return;
     }
-    
+
+    //kasvatetaan nopeutta
     if(nosMode) {
       this.nopeuskerroin = ((millis()/1000) - this.aloitusaika)/5+7;
     }
@@ -142,6 +166,12 @@ class Pelimoottori {
       this.nopeuskerroin = ((millis()/1000) - this.aloitusaika)/5+1;
     }
     
+    
+    //siirretään esineitä
+    siirraEsineita();   
+    
+    
+    //piirretään esineet    
     background(255);
     
 
@@ -187,18 +217,6 @@ class Pelimoottori {
       }
     }
     
-    //Pelaajan kuva
-    this.blob.piirraLaatikko(200, 500, true);
-
-    //this.blob.piirra();
-    
-    //Nurkkamittarit TODO
-    fill(0,255,0);
-    rect(0,500,200,150);
-    rect(400,500,200,150);
-    
-    
-    siirraEsineita();
 
     this.mopo.x = this.laskeMoponX();
     //println(this.blob.annaBlobinX());
@@ -213,6 +231,24 @@ class Pelimoottori {
       this.viimeisinLisays = (millis() / 1000);
       
     }
+    
+    //Pelaajan kuva
+    this.blob.piirraLaatikko(200, 500, true);
+
+    //this.blob.piirra();
+    
+    //Nurkkamittarit TODO
+    fill(0,255,0);
+    rect(0,500,200,150);
+    rect(400,500,200,150);
+    
+    
+    //fill(255,0,0);
+    //rect(500,0, 200,50);
+    fill(255);
+    float kulunutaika = (float)millis()/1000-this.aloitusaika;
+    text(kulunutaika, 485, 620); 
+
   }
   
   int laskeMoponX() {
