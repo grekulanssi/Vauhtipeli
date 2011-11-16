@@ -228,6 +228,7 @@ class Pelimoottori {
     for (int i=0; i<this.esineet.size(); i++) {
       if (this.esineet.get(i).tormaako(this.mopo)) {
         gameover = true; 
+        return;
       }
   
     }  
