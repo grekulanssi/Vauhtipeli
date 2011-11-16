@@ -35,9 +35,9 @@ class Pelimoottori {
    * nos tarkoittaa ilokaasua (jos et tienny niin katso Hurjapäät-leffa)
    */
   PImage taustakuva;
-  PImage taustakuva_nos;
+  PImage taustakuvaNos;
   
-  boolean nos_mode;
+  boolean nosMode;
   
   //Luodaan peli
   Pelimoottori(PApplet parent) {
@@ -51,11 +51,11 @@ class Pelimoottori {
     this.piirrapeli = false;
     
     taustakuva = loadImage("asvaltti.png");
-    taustakuva_nos = loadImage("asvaltti_nos.png");
+    taustakuvaNos = loadImage("asvaltti_nos.png");
     aloituskuva = loadImage("start.png");
     aloitusnappi = loadImage("startbutton.png");
     
-    nos_mode = false;
+    nosMode = false;
 
   }
    
@@ -138,13 +138,13 @@ class Pelimoottori {
 
     imageMode(CORNER);
     //Piirretään tausta jatkuvana
-    if(nos_mode) {
+    if(nosMode) {
       image(taustakuva, 0,this.piirtolaskuri%500, 600,500);
       image(taustakuva, 0,this.piirtolaskuri%500-500, 600,500);
     }
     else {
-      image(taustakuva_nos, 0,this.piirtolaskuri%500, 600,500);
-      image(taustakuva_nos, 0,this.piirtolaskuri%500-500, 600,500);
+      image(taustakuvaNos, 0,this.piirtolaskuri%500, 600,500);
+      image(taustakuvaNos, 0,this.piirtolaskuri%500-500, 600,500);
     }
     imageMode(CENTER);
     
@@ -236,8 +236,29 @@ class Pelimoottori {
     
     //Tarkistetaan törmäykset
     for (int i=0; i<this.esineet.size(); i++) {
-      if (this.esineet.get(i).tormaako(this.mopo)) {
-        gameover = true; 
+      Esine e = this.esineet.get(i);
+      if (e.tormaako(this.mopo)) {
+        if(!e.onKiva()) {
+          if(e instanceof Auto) {
+            //RAJAHDYS
+            gameover = true;
+          }
+          else if(e instanceof Piikkimatto) {
+            gameover = true;
+          }
+          else if(e instanceof Oljylatakko) {
+            //JOTAIN LIUKASTELUA;
+          }
+        }
+        else {
+          this.esineet.remove(i);
+          if(e instanceof Ilokaasu) {
+            nosMode = true;
+          }
+          else if(e instanceof Jerrykannu) {
+            //JOTAIN BENSAA LISAA JOTENKI
+          }
+        }
         return;
       }
   
