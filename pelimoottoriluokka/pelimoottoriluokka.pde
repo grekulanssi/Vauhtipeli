@@ -121,7 +121,7 @@ class Pelimoottori {
   
   //Piirretään pelin tilanne
   void piirraPeli() {
-    
+        
     //piirtolaskuria käytetään taustan rullaamiseen
     //se ei näytä välttämättä oikeaa piirtokertojen määrää
     piirtolaskuri = piirtolaskuri + this.nopeuskerroin;
@@ -139,12 +139,12 @@ class Pelimoottori {
     imageMode(CORNER);
     //Piirretään tausta jatkuvana
     if(nosMode) {
-      image(taustakuva, 0,this.piirtolaskuri%500, 600,500);
-      image(taustakuva, 0,this.piirtolaskuri%500-500, 600,500);
-    }
-    else {
       image(taustakuvaNos, 0,this.piirtolaskuri%500, 600,500);
       image(taustakuvaNos, 0,this.piirtolaskuri%500-500, 600,500);
+    }
+    else {
+      image(taustakuva, 0,this.piirtolaskuri%500, 600,500);
+      image(taustakuva, 0,this.piirtolaskuri%500-500, 600,500);
     }
     imageMode(CENTER);
     
@@ -197,6 +197,16 @@ class Pelimoottori {
       int vanhax = this.mopo.x;
       int kallistusx = this.blob.annaBlobinX()/10;
       int uusix = vanhax + kallistusx;
+      
+      if(kallistusx < 0) {
+        mopo.asetaTila(Mopo.VASEN);
+      }
+      else if(kallistusx > 0) {
+        mopo.asetaTila(Mopo.OIKEA);
+      }
+      else {
+        mopo.asetaTila(Mopo.SUORAAN);
+      }
       
       if (uusix < 60)
         uusix = 60;
