@@ -251,7 +251,7 @@ class Pelimoottori {
     float kaistaArpa  = random(4);  
     Esine palautus = null;
     
-    if(arpa < 50) {  
+    if(arpa < 40) {  
       if (kaistaArpa < 1){
       palautus = new Auto(xArpa1, -50, true);
       }
@@ -265,7 +265,7 @@ class Pelimoottori {
       palautus = new Auto(xArpa4, -50, false);
       }
     }
-    else if(arpa < 70) {
+    else if(arpa < 50) {
         
       if (kaistaArpa < 1){
       palautus = new Oljylatakko(xArpa1, -50);
@@ -281,7 +281,7 @@ class Pelimoottori {
       }
     }
      
-    else if(arpa < 50) {
+    else if(arpa < 70) {
        if (kaistaArpa < 1){
       palautus = new Jerrykannu(xArpa1, -50);
       }
@@ -295,7 +295,7 @@ class Pelimoottori {
       palautus = new Jerrykannu(xArpa4, -50);
       }
     }
-    else if(arpa < 100) {
+    else if(arpa < 90) {
        if (kaistaArpa < 2){
       palautus = new Piikkimatto(100, -50);
       }

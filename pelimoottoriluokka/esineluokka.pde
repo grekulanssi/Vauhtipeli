@@ -42,13 +42,13 @@ abstract class Esine extends Objekti {
 
 class Jerrykannu extends Esine {
   public Jerrykannu(int x, int y) {
-    super(true, "jerrykannu.png", x, y, 20, 30);
+    super(true, "jerrykannu.png", x, y, 40, 42);
   }
 }
 
 class Ilokaasu extends Esine {
   public Ilokaasu(int x, int y) {
-    super(true, "ilokaasu.png", x, y, 25, 25);
+    super(true, "ilokaasu.png", x, y, 50, 46);
   }
   
 }
