@@ -255,7 +255,7 @@ class Pelimoottori {
   }
   
   
-  boolean siirraEsineita() {
+  void siirraEsineita() {
     if(nosMode && (millis() / 1000) - nosKello >= 7) {
       nosMode = false;
       nosKello = 0;
@@ -290,6 +290,7 @@ class Pelimoottori {
     //Tarkistetaan törmäykset
     for (int i=0; i<this.esineet.size(); i++) {
       Esine e = this.esineet.get(i);
+      
       if (e.tormaako(this.mopo)) {
         if(!e.onKiva()) {
           if(e instanceof Auto) {
@@ -313,14 +314,13 @@ class Pelimoottori {
             //JOTAIN BENSAA LISAA JOTENKI
           }
         }
-        return;
+
       if (this.esineet.get(i).tormaako(this.mopo)) {
         gameover = true; 
         
-        return true;
       }
       
-      
+      }  
   
     }  
     
@@ -332,7 +332,6 @@ class Pelimoottori {
       }
     }
     
-    return false;
   }
   // Antaa satunnaisen uuden esineen.
   public Esine annaRandomEsine() {
