@@ -38,6 +38,7 @@ class Pelimoottori {
   PImage taustakuvaNos;
   
   boolean nosMode;
+  int nosKelloM;
   int nosKello;
   
   //Luodaan peli
@@ -57,7 +58,8 @@ class Pelimoottori {
     aloitusnappi = loadImage("startbutton.png");
     
     nosMode = false;
-   
+    nosKello = 0;
+    nosKelloM = 0;
 
   }
    
@@ -167,8 +169,8 @@ class Pelimoottori {
     if(nosMode) {
       println("I NEED NOOOOOOSSSS");
       for(int v = 0; v < 6; v++) {
-        rect(width/4+4,(v*100)+this.piirtolaskuri%500, 20,60+this.nopeuskerroin);
-        rect(width/4+4,(v*100)+this.piirtolaskuri%500-500, 20,60+this.nopeuskerroin);
+        rect(width/4+4,(v*100)+this.piirtolaskuri%500, 20,60+(millis() - nosKelloM));
+        rect(width/4+4,(v*100)+this.piirtolaskuri%500-500, 20,60+(millis() - nosKelloM));
       
         rect(width*3/4-28,(v*100)+this.piirtolaskuri%500, 20,60+this.nopeuskerroin);
         rect(width*3/4-28,(v*100)+this.piirtolaskuri%500-500, 20,60+this.nopeuskerroin);
@@ -287,7 +289,8 @@ class Pelimoottori {
           this.esineet.remove(i);
           if(e instanceof Ilokaasu) {
             nosMode = true;
-            nosKello = millis() / 1000;
+            nosKelloM = millis();
+            nosKello = nosKelloM / 1000;
           }
           else if(e instanceof Jerrykannu) {
             //JOTAIN BENSAA LISAA JOTENKI
@@ -316,7 +319,7 @@ class Pelimoottori {
     float kaistaArpa  = random(4);  
     Esine palautus = null;
     
-    if(arpa < 40) {  
+    if(arpa < 0) {  
       if (kaistaArpa < 1){
       palautus = new Auto(xArpa1, -50, true);
       }
@@ -330,7 +333,7 @@ class Pelimoottori {
       palautus = new Auto(xArpa4, -50, false);
       }
     }
-    else if(arpa < 50) {
+    else if(arpa < 0) {
         
       if (kaistaArpa < 1){
       palautus = new Oljylatakko(xArpa1, -50);
@@ -346,7 +349,7 @@ class Pelimoottori {
       }
     }
      
-    else if(arpa < 70) {
+    else if(arpa < 0) {
        if (kaistaArpa < 1){
       palautus = new Jerrykannu(xArpa1, -50);
       }
@@ -360,7 +363,7 @@ class Pelimoottori {
       palautus = new Jerrykannu(xArpa4, -50);
       }
     }
-    else if(arpa < 90) {
+    else if(arpa < 0) {
        if (kaistaArpa < 2){
       palautus = new Piikkimatto(100, -50);
       }
