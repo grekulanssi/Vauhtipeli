@@ -12,7 +12,6 @@ void draw() {
 }
 
 
-
 /*
 Pelimoottori
 */
@@ -29,34 +28,42 @@ class Pelimoottori {
   PImage aloituskuva;
   PImage aloitusnappi;
   boolean piirrapeli;
-  int nopeuskerroin = 1;
+  int nopeuskerroin;
   
   /* taustalla näkyvä asvaltti talletetaan attribuuttiin
    * nos tarkoittaa ilokaasua (jos et tienny niin katso Hurjapäät-leffa)
    */
   PImage taustakuva;
-  PImage taustakuvaNos;
+  PImage taustakuva_nos;
   PImage peliohi;
-  
-  boolean nosMode;
+  PImage restart;
   
   //Luodaan peli
   Pelimoottori(PApplet parent) {
-    this.esineet = new ArrayList<Esine>(); 
-    this.mopo = new Mopo(width/2, 450);    
-    this.esineet.add(new Piikkimatto(200, 300));
-    //this.esineet.
-    gameover = false;
     this.blob = new Blobfinder(parent);
-    this.viimeisinLisays = millis() / 1000;
-    this.piirrapeli = false;
-    
     taustakuva = loadImage("asvaltti.png");
-    taustakuvaNos = loadImage("asvaltti_nos.png");
+    taustakuva_nos = loadImage("asvaltti_nos.png");
     aloituskuva = loadImage("start.png");
     aloitusnappi = loadImage("startbutton.png");
+    peliohi = loadImage("gameover.png");
+    restart = loadImage("restart.png");
     
-    nosMode = false;
+    this.piirrapeli = false;
+    
+    this.uusiPeli();
+  }
+  
+  void uusiPeli() {
+    this.esineet = new ArrayList<Esine>(); 
+    this.mopo = new Mopo(width/2, 450);    
+    //this.esineet.add(new Piikkimatto(200, 300));
+    //this.esineet.
+    gameover = false;
+    this.nopeuskerroin = 1;
+    
+    this.viimeisinLisays = millis() / 1000;   
+    
+
 
   }
    
@@ -122,36 +129,44 @@ class Pelimoottori {
   
   //Piirretään pelin tilanne
   void piirraPeli() {
-        
+    
     //piirtolaskuria käytetään taustan rullaamiseen
     //se ei näytä välttämättä oikeaa piirtokertojen määrää
     piirtolaskuri = piirtolaskuri + this.nopeuskerroin;
     
-    //Jos gameover niin ei piirretä
+    //Jos gameover niin GAME OVER
     if (this.gameover) {
             
       //Piirretään lopputulos
-      imageMode(CORNER);
-      image(peliohi, 41, 150);
+      imageMode(CENTER);
+      image(peliohi, width/2, 250);
+      image(restart, width/2, 350);
+      
+      if (mousePressed && mouseX >= (width/2)-96 && mouseX <= (width/2)+96 && 
+          mouseY >= 350-26 && mouseY <= 350+26) {
+            println("UUSI");
+            this.uusiPeli();
+      }
       
       return;
     }
     
+    //kasvatetaan nopeutta
     this.nopeuskerroin = ((millis()/1000) - this.aloitusaika)/5+1;
     
+    
+    //siirretään esineitä
+    siirraEsineita();   
+    
+    
+    //piirretään esineet    
     background(255);
     
 
     imageMode(CORNER);
     //Piirretään tausta jatkuvana
-    if(nosMode) {
-      image(taustakuvaNos, 0,this.piirtolaskuri%500, 600,500);
-      image(taustakuvaNos, 0,this.piirtolaskuri%500-500, 600,500);
-    }
-    else {
-      image(taustakuva, 0,this.piirtolaskuri%500, 600,500);
-      image(taustakuva, 0,this.piirtolaskuri%500-500, 600,500);
-    }
+    image(taustakuva, 0,this.piirtolaskuri%500, 600,500);
+    image(taustakuva, 0,this.piirtolaskuri%500-500, 600,500);
     imageMode(CENTER);
     
     strokeWeight(0);
@@ -202,24 +217,13 @@ class Pelimoottori {
     fill(255);
     float kulunutaika = (float)millis()/1000-this.aloitusaika;
     text(kulunutaika, 485, 620); 
-    
-    siirraEsineita();
+
   }
   
   int laskeMoponX() {
       int vanhax = this.mopo.x;
       int kallistusx = this.blob.annaBlobinX()/10;
       int uusix = vanhax + kallistusx;
-      
-      if(kallistusx < 0) {
-        mopo.asetaTila(Mopo.VASEN);
-      }
-      else if(kallistusx > 0) {
-        mopo.asetaTila(Mopo.OIKEA);
-      }
-      else {
-        mopo.asetaTila(Mopo.SUORAAN);
-      }
       
       if (uusix < 60)
         uusix = 60;
@@ -259,29 +263,8 @@ class Pelimoottori {
     
     //Tarkistetaan törmäykset
     for (int i=0; i<this.esineet.size(); i++) {
-      Esine e = this.esineet.get(i);
-      if (e.tormaako(this.mopo)) {
-        if(!e.onKiva()) {
-          if(e instanceof Auto) {
-            //RAJAHDYS
-            gameover = true;
-          }
-          else if(e instanceof Piikkimatto) {
-            gameover = true;
-          }
-          else if(e instanceof Oljylatakko) {
-            //JOTAIN LIUKASTELUA;
-          }
-        }
-        else {
-          this.esineet.remove(i);
-          if(e instanceof Ilokaasu) {
-            nosMode = true;
-          }
-          else if(e instanceof Jerrykannu) {
-            //JOTAIN BENSAA LISAA JOTENKI
-          }
-        }
+      if (this.esineet.get(i).tormaako(this.mopo)) {
+        gameover = true; 
         
         return true;
       }
