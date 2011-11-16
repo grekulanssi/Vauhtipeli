@@ -175,8 +175,14 @@ class Pelimoottori {
 
     imageMode(CORNER);
     //Piirretään tausta jatkuvana
-    image(taustakuva, 0,this.piirtolaskuri%500, 600,500);
-    image(taustakuva, 0,this.piirtolaskuri%500-500, 600,500);
+    if(nosMode) {
+      image(taustakuva_nos, 0,this.piirtolaskuri%500, 600,500);
+      image(taustakuva_nos, 0,this.piirtolaskuri%500-500, 600,500);
+    }
+    else {
+      image(taustakuva, 0,this.piirtolaskuri%500, 600,500);
+      image(taustakuva, 0,this.piirtolaskuri%500-500, 600,500);
+    }
     imageMode(CENTER);
     
     strokeWeight(0);
@@ -246,6 +252,16 @@ class Pelimoottori {
       int vanhax = this.mopo.x;
       int kallistusx = this.blob.annaBlobinX()/10;
       int uusix = vanhax + kallistusx;
+      
+      if(kallistusx < 0) {
+        mopo.asetaTila(Mopo.VASEN);
+      }
+      else if(kallistusx > 0) {
+        mopo.asetaTila(Mopo.OIKEA);
+      }
+      else {
+        mopo.asetaTila(Mopo.SUORAAN);
+      }
       
       if (uusix < 60)
         uusix = 60;
