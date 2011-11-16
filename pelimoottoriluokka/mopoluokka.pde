@@ -3,7 +3,8 @@ class Mopo extends Objekti {
   //jos kiva esine niin jotain plussaa
   //jos paha esine niin jotain kamalaa
   PImage kuva;
-  PImage kuva_k;
+  PImage kuva_o;
+  PImage kuva_v;
   public static final int SUORAAN = 100;
   public static final int VASEN = 99;
   public static final int OIKEA = 101;
@@ -13,7 +14,8 @@ class Mopo extends Objekti {
    super(x, y, 30,60);
    
    kuva = loadImage("mopo.png");
-   kuva_k = loadImage("mopo_k.png");
+   kuva_o = loadImage("mopo_o.png");
+   kuva_v = loadImage("mopo_v.png");
   }
   
   public void asetaTila(int kaantyminen) {
@@ -25,26 +27,14 @@ class Mopo extends Objekti {
     }
   }
     
-  void piirra() {//TODO: switch näyttäs kivemmalta!
+  void piirra() {
     imageMode(CENTER);
-    if(moponTila == SUORAAN) {
-      image(kuva, x,y);
+    switch(moponTila) {
+      case SUORAAN:  image(kuva, x,y); break;
+      case OIKEA:    image(kuva_o, x,y); break;
+      case VASEN:    image(kuva_v, x,y); break;
+      default:       image(kuva, x,y); break;
     }
-    else {
-      if(moponTila == OIKEA) {
-        image(kuva_k, x,y);
-      }
-      else {
-        if(moponTila == VASEN) {
-          //TÄHÄN KUVAN PEILAUS!
-          image(kuva_k, x,y);
-        }
-      }
-    }
-    /*fill(255,0,0);
-    ellipseMode(CENTER);
-    ellipse(x, y, 20, 20);
-    */  
   }
   
 }
