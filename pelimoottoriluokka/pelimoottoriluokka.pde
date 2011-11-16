@@ -36,6 +36,7 @@ class Pelimoottori {
    */
   PImage taustakuva;
   PImage taustakuva_nos;
+  PImage peliohi;
   
   //Luodaan peli
   Pelimoottori(PApplet parent) {
@@ -52,6 +53,7 @@ class Pelimoottori {
     taustakuva_nos = loadImage("asvaltti_nos.png");
     aloituskuva = loadImage("start.png");
     aloitusnappi = loadImage("startbutton.png");
+    peliohi = loadImage("gameover.png");
 
   }
    
@@ -124,6 +126,11 @@ class Pelimoottori {
     
     //Jos gameover niin ei piirretä
     if (this.gameover) {
+            
+      //Piirretään lopputulos
+      imageMode(CORNER);
+      image(peliohi, 41, 150);
+      
       return;
     }
     
@@ -155,18 +162,6 @@ class Pelimoottori {
       rect(width*3/4-28,(v*100)+this.piirtolaskuri%500-500, 20,60);
     }
     
-    //Pelaajan kuva
-    this.blob.piirraLaatikko(200, 500, true);
-
-    //this.blob.piirra();
-    
-    //Nurkkamittarit TODO
-    fill(0,255,0);
-    rect(0,500,200,150);
-    rect(400,500,200,150);
-    
-    
-    siirraEsineita();
 
     this.mopo.x = this.laskeMoponX();
     //println(this.blob.annaBlobinX());
@@ -181,6 +176,25 @@ class Pelimoottori {
       this.viimeisinLisays = (millis() / 1000);
       
     }
+    
+    //Pelaajan kuva
+    this.blob.piirraLaatikko(200, 500, true);
+
+    //this.blob.piirra();
+    
+    //Nurkkamittarit TODO
+    fill(0,255,0);
+    rect(0,500,200,150);
+    rect(400,500,200,150);
+    
+    
+    //fill(255,0,0);
+    //rect(500,0, 200,50);
+    fill(255);
+    float kulunutaika = (float)millis()/1000-this.aloitusaika;
+    text(kulunutaika, 485, 620); 
+    
+    siirraEsineita();
   }
   
   int laskeMoponX() {
@@ -196,7 +210,7 @@ class Pelimoottori {
   }
   
   
-  void siirraEsineita() {
+  boolean siirraEsineita() {
     //Piirretään esineet
     for (int i=0; i<this.esineet.size(); i++) {
       Esine tamaesine = this.esineet.get(i);
@@ -228,8 +242,11 @@ class Pelimoottori {
     for (int i=0; i<this.esineet.size(); i++) {
       if (this.esineet.get(i).tormaako(this.mopo)) {
         gameover = true; 
-        return;
+        
+        return true;
       }
+      
+      
   
     }  
     
@@ -240,6 +257,8 @@ class Pelimoottori {
         esineet.remove(e);
       }
     }
+    
+    return false;
   }
   // Antaa satunnaisen uuden esineen.
   public Esine annaRandomEsine() {
