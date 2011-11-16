@@ -38,6 +38,9 @@ class Pelimoottori {
   PImage peliohi;
   PImage restart;
   
+  boolean nosMode;
+  int nosKello;
+  
   //Luodaan peli
   Pelimoottori(PApplet parent) {
     this.blob = new Blobfinder(parent);
@@ -63,6 +66,7 @@ class Pelimoottori {
     
     this.viimeisinLisays = millis() / 1000;   
     
+   
 
 
   }
@@ -151,6 +155,12 @@ class Pelimoottori {
       return;
     }
     
+    if(nosMode) {
+      this.nopeuskerroin = ((millis()/1000) - this.aloitusaika)/5+7;
+    }
+    else {
+      this.nopeuskerroin = ((millis()/1000) - this.aloitusaika)/5+1;
+    }
     //kasvatetaan nopeutta
     this.nopeuskerroin = ((millis()/1000) - this.aloitusaika)/5+1;
     
@@ -178,12 +188,24 @@ class Pelimoottori {
     
     //valkoset kaistaviivat jatkuvana
     fill(240,240,240,240);
-    for(int v = 0; v < 6; v++) {
-      rect(width/4+4,(v*100)+this.piirtolaskuri%500, 20,60);
-      rect(width/4+4,(v*100)+this.piirtolaskuri%500-500, 20,60);
+    if(nosMode) {
+      println("I NEED NOOOOOOSSSS");
+      for(int v = 0; v < 6; v++) {
+        rect(width/4+4,(v*100)+this.piirtolaskuri%500, 20,60+this.nopeuskerroin);
+        rect(width/4+4,(v*100)+this.piirtolaskuri%500-500, 20,60+this.nopeuskerroin);
       
-      rect(width*3/4-28,(v*100)+this.piirtolaskuri%500, 20,60);
-      rect(width*3/4-28,(v*100)+this.piirtolaskuri%500-500, 20,60);
+        rect(width*3/4-28,(v*100)+this.piirtolaskuri%500, 20,60+this.nopeuskerroin);
+        rect(width*3/4-28,(v*100)+this.piirtolaskuri%500-500, 20,60+this.nopeuskerroin);
+      }
+    }
+    else {
+      for(int v = 0; v < 6; v++) {
+        rect(width/4+4,(v*100)+this.piirtolaskuri%500, 20,60);
+        rect(width/4+4,(v*100)+this.piirtolaskuri%500-500, 20,60);
+      
+        rect(width*3/4-28,(v*100)+this.piirtolaskuri%500, 20,60);
+        rect(width*3/4-28,(v*100)+this.piirtolaskuri%500-500, 20,60);
+      }
     }
     
 
@@ -234,6 +256,10 @@ class Pelimoottori {
   
   
   boolean siirraEsineita() {
+    if(nosMode && (millis() / 1000) - nosKello >= 7) {
+      nosMode = false;
+      nosKello = 0;
+    }
     //Piirretään esineet
     for (int i=0; i<this.esineet.size(); i++) {
       Esine tamaesine = this.esineet.get(i);
@@ -263,6 +289,31 @@ class Pelimoottori {
     
     //Tarkistetaan törmäykset
     for (int i=0; i<this.esineet.size(); i++) {
+      Esine e = this.esineet.get(i);
+      if (e.tormaako(this.mopo)) {
+        if(!e.onKiva()) {
+          if(e instanceof Auto) {
+            //RAJAHDYS
+            gameover = true;
+          }
+          else if(e instanceof Piikkimatto) {
+            gameover = true;
+          }
+          else if(e instanceof Oljylatakko) {
+            //JOTAIN LIUKASTELUA;
+          }
+        }
+        else {
+          this.esineet.remove(i);
+          if(e instanceof Ilokaasu) {
+            nosMode = true;
+            nosKello = millis() / 1000;
+          }
+          else if(e instanceof Jerrykannu) {
+            //JOTAIN BENSAA LISAA JOTENKI
+          }
+        }
+        return;
       if (this.esineet.get(i).tormaako(this.mopo)) {
         gameover = true; 
         
