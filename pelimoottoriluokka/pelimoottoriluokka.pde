@@ -168,12 +168,13 @@ class Pelimoottori {
     fill(240,240,240,240);
     if(nosMode) {
       println("I NEED NOOOOOOSSSS");
+      int venytys = (millis() - nosKelloM)/50;
       for(int v = 0; v < 6; v++) {
-        rect(width/4+4,(v*100)+this.piirtolaskuri%500, 20,60+(millis() - nosKelloM));
-        rect(width/4+4,(v*100)+this.piirtolaskuri%500-500, 20,60+(millis() - nosKelloM));
+        rect(width/4+4,(v*100)+this.piirtolaskuri%500, 20,60+venytys);
+        rect(width/4+4,(v*100)+this.piirtolaskuri%500-500, 20,60+venytys);
       
-        rect(width*3/4-28,(v*100)+this.piirtolaskuri%500, 20,60+this.nopeuskerroin);
-        rect(width*3/4-28,(v*100)+this.piirtolaskuri%500-500, 20,60+this.nopeuskerroin);
+        rect(width*3/4-28,(v*100)+this.piirtolaskuri%500, 20,60+venytys);
+        rect(width*3/4-28,(v*100)+this.piirtolaskuri%500-500, 20,60+venytys);
       }
     }
     else {
