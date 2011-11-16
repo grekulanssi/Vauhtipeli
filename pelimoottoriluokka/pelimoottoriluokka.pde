@@ -422,7 +422,8 @@ class Pelimoottori {
       palautus = new Ilokaasu(xArpa4, -50);
       }
     }
-    return palautus;
+    //return palautus;
+    return new Auto(100,-50, true);
   }
 }
 
