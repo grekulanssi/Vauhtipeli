@@ -46,7 +46,7 @@ class Pelimoottori {
   Pelimoottori(PApplet parent) {
     this.blob = new Blobfinder(parent);
     taustakuva = loadImage("asvaltti.png");
-    taustakuva_nos = loadImage("asvaltti_nos.png");
+    taustakuvaNos = loadImage("asvaltti_nos.png");
     aloituskuva = loadImage("start.png");
     aloitusnappi = loadImage("startbutton.png");
     peliohi = loadImage("gameover.png");
