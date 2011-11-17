@@ -30,10 +30,18 @@ class Mopo extends Objekti {
   void piirra() {
     imageMode(CENTER);
     switch(moponTila) {
-      case SUORAAN:  image(kuva, x,y); break;
-      case OIKEA:    image(kuvaO, x,y); break;
-      case VASEN:    image(kuvaV, x,y); break;
-      default:       image(kuva, x,y); break;
+      case SUORAAN:
+        image(kuva, x,y);
+        break;
+      case OIKEA:
+        image(kuvaO, x,y);
+        break;
+      case VASEN:
+        image(kuvaV, x,y);
+        break;
+      default:
+        image(kuva, x,y);
+        break;
     }
   }
   
