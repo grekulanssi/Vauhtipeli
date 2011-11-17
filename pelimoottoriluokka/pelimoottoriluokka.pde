@@ -88,6 +88,7 @@ class Pelimoottori {
    oljyaRenkaissa = false;
   }
    
+   /*
   //Näppäintä on painettu
   void painettu() {
     if (key == CODED) {
@@ -106,9 +107,13 @@ class Pelimoottori {
            break;
       }
     }
-  }
+    
+  }*/
   
+  //Yleismetodi piirrä
   void piirra() {
+    
+    ///Aloitusruudussa valitaan nenän väri
     if (mousePressed && mouseX <= 360 && mouseX >= 240 && 
           mouseY >= 550 && mouseY <= 550+33) {
       samplecolor = this.blob.annaKeskipisteenVari();
@@ -116,9 +121,10 @@ class Pelimoottori {
       this.aloitusaika = millis()/1000;
     }
       
-      
+    //Piirretään peli      
     if (piirrapeli)
       piirraPeli(); 
+    //Piirretään valikko
     else
       piirraValikko();
   }
@@ -151,7 +157,7 @@ class Pelimoottori {
   //Piirretään pelin tilanne
   void piirraPeli() {
         
-    //piirtolaskuria käytetään taustan rullaamiseen
+    //piirtolaskuria käytetään taustan näyttämiseen/rullaamiseen
     //se ei näytä välttämättä oikeaa piirtokertojen määrää
     piirtolaskuri = piirtolaskuri + this.nopeuskerroin;
     
@@ -172,17 +178,8 @@ class Pelimoottori {
       return;
     }
 
-    //kasvatetaan nopeutta
-    this.nopeuskerroin = ((millis()/1000) - this.aloitusaika)/5+(nosMode? 7 : 1);
-    
-    //vähennetään bensaa
-    this.bensaa -= 0.002;
-    if (this.bensaa < 0)
-      this.bensaa = 0;
-
-    
-    //siirretään esineitä
-    siirraEsineita();   
+    //toteutetaan pelilogiikka
+    pelilogiikka();   
     
     
     //piirretään esineet    
@@ -342,7 +339,16 @@ class Pelimoottori {
   }
   
   
-  void siirraEsineita() {
+  void pelilogiikka() {
+    
+        //kasvatetaan nopeutta
+    this.nopeuskerroin = ((millis()/1000) - this.aloitusaika)/5+(nosMode? 7 : 1);
+    
+    //vähennetään bensaa
+    this.bensaa -= 0.002;
+    if (this.bensaa < 0)
+      this.bensaa = 0;
+      
     if(nosMode && (millis() / 1000) - nosKello >= 7) {
       nosMode = false;
       nosKello = 0;
