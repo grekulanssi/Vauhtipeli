@@ -266,14 +266,17 @@ class Pelimoottori {
     
     //Nopeusmittari
     image(nopeusmittari, 400,500);
+    
     //Nopeusmittarin viisari
     pushMatrix();
     translate(494,596);
-    strokeWeight(0);
-    fill(200);
+    strokeWeight(1);
+    fill(255,0,0);
+    stroke(200);
     rotate(-PI-PI/6);
-    rotate( (PI/14) * (this.nopeuskerroin) );
+    rotate( (PI/14) * (this.annaNopeuskerroin()) );
     rect(0,0,50,5);
+    stroke(0);
     popMatrix();
     
     //fill(255,0,0);
@@ -283,6 +286,11 @@ class Pelimoottori {
     text(kulunutaika, 85, 620);
     text("SHIFT # " + this.nopeuskerroin, 460, 620); 
 
+    //println("Nopeus: " + this.annaNopeuskerroin());
+  }
+  
+  float annaNopeuskerroin() {
+    return (this.nopeuskerroin) + ((float)((millis()) - this.aloitusaika*1000)%5000)/5000 ; 
   }
   
   int laskeMoponX() {
