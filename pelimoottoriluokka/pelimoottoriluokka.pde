@@ -320,7 +320,7 @@ class Pelimoottori {
     //rect(500,0, 200,50);
     fill(255);
     float kulunutaika = (float)millis()/1000-this.aloitusaika;
-    text(kulunutaika, 85, 620);
+
     text("SHIFT # " + (this.nopeuskerroin/3+1), 460, 620); 
 
     //println("Nopeus: " + this.annaNopeuskerroin());
