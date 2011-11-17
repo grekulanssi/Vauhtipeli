@@ -29,6 +29,7 @@ class Pelimoottori {
   boolean piirrapeli;
   int nopeuskerroin;
   double bensaa; //bensaa on 0-20 litraa
+  float lopputulos;
   
   /* taustalla näkyvä asvaltti talletetaan attribuuttiin
    * nos tarkoittaa ilokaasua (jos et tienny niin katso Hurjapäät-leffa)
@@ -80,6 +81,7 @@ class Pelimoottori {
     this.aloitusaika = millis()/1000;
     println(this.nopeuskerroin);
     this.viimeisinLisays = millis() / 1000;   
+    this.lopputulos = -1;
     
    nosMode = false;
    nosKello = 0;
@@ -166,11 +168,19 @@ class Pelimoottori {
     //Jos gameover niin ei piirretä
     if (this.gameover) {
             
-      //Piirretään lopputulos
+      //Piirretään lopputulos-laatikko
       imageMode(CENTER);
       image(peliohi, width/2, 250);
       image(restart, width/2, 350);
       
+      //näytetään tulos sekunteina
+      float kulunutaika = (float)millis()/1000-this.aloitusaika;
+      if (this.lopputulos < 0) {
+        this.lopputulos = kulunutaika;
+      }
+      text(this.lopputulos + " seconds", width/2-45, 270);
+      
+      //jos klikataan restart
       if (mousePressed && mouseX >= (width/2)-96 && mouseX <= (width/2)+96 && 
           mouseY >= 350-26 && mouseY <= 350+26) {
             println("UUSI");
@@ -310,7 +320,7 @@ class Pelimoottori {
     fill(255);
     float kulunutaika = (float)millis()/1000-this.aloitusaika;
     text(kulunutaika, 85, 620);
-    text("SHIFT # " + this.nopeuskerroin, 460, 620); 
+    text("SHIFT # " + (this.nopeuskerroin/3+1), 460, 620); 
 
     //println("Nopeus: " + this.annaNopeuskerroin());
   }
@@ -434,6 +444,7 @@ class Pelimoottori {
               nosMode = true;
               nosKello = millis() / 1000;
               nosY = this.mopo.y;
+              this.esineet.remove(i);
           }
 
           }
