@@ -341,11 +341,16 @@ class Pelimoottori {
   
   void pelilogiikka() {
     
-        //kasvatetaan nopeutta
+    if (this.bensaa <= 0) {
+      gameover = true;
+      return;
+    }
+      
+    //kasvatetaan nopeutta
     this.nopeuskerroin = ((millis()/1000) - this.aloitusaika)/5+(nosMode? 7 : 1);
     
     //vähennetään bensaa
-    this.bensaa -= 0.002;
+    this.bensaa -= 0.008;
     if (this.bensaa < 0)
       this.bensaa = 0;
       
@@ -393,9 +398,11 @@ class Pelimoottori {
           if(e instanceof Auto) {
             //RAJAHDYS
             gameover = true;
+            return;
           }
           else if(e instanceof Piikkimatto) {
             gameover = true;
+            return;
           }
           else if(e instanceof Oljylatakko) {
             //JOTAIN LIUKASTELUA;
