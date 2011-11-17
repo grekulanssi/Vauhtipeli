@@ -39,7 +39,6 @@ class Pelimoottori {
   PImage restart;
   
   boolean nosMode;
-  int nosKelloM;
   int nosKello;
   int nosY;
   int kaistaviivanpituus;
@@ -74,7 +73,6 @@ class Pelimoottori {
     
    nosMode = false;
    nosKello = 0;
-   nosKelloM = 0;
    nosY = 0;
 
    kaistaviivanpituus = 60;
@@ -167,13 +165,8 @@ class Pelimoottori {
     }
 
     //kasvatetaan nopeutta
-    if(nosMode) {
-      this.nopeuskerroin = ((millis()/1000) - this.aloitusaika)/5+7;
-    }
-    else {
-      this.nopeuskerroin = ((millis()/1000) - this.aloitusaika)/5+1;
-    }
-    
+    this.nopeuskerroin = ((millis()/1000) - this.aloitusaika)/5+(nosMode? 7 : 1);
+
     
     //siirretään esineitä
     siirraEsineita();   
@@ -202,44 +195,41 @@ class Pelimoottori {
     rect(width/2-26,0, 20,500);
     rect(width/2+2,0, 20,500);
     
-    //valkoset kaistaviivat jatkuvana
+    //valkoset katkoviivat
     fill(240,240,240,240);
     if(nosMode) {
       println("I NEED NOOOOOOSSSS");
-      int venytys = (millis() - nosKelloM)/50;
       if(kaistaviivanpituus < 120) {
         kaistaviivanpituus ++;
-      }
-      for(int v = 0; v < 6; v++) {
-        rect(width/4+4,(v*100)+this.piirtolaskuri%500, 20,kaistaviivanpituus);
-        rect(width/4+4,(v*100)+this.piirtolaskuri%500-500, 20,kaistaviivanpituus);
-      
-        rect(width*3/4-28,(v*100)+this.piirtolaskuri%500, 20,kaistaviivanpituus);
-        rect(width*3/4-28,(v*100)+this.piirtolaskuri%500-500, 20,kaistaviivanpituus);
       }
     }
     else {
       if(kaistaviivanpituus > 60) {
         kaistaviivanpituus --;
       }
-      for(int v = 0; v < 6; v++) {
-        rect(width/4+4,(v*100)+this.piirtolaskuri%500, 20,kaistaviivanpituus);
-        rect(width/4+4,(v*100)+this.piirtolaskuri%500-500, 20,kaistaviivanpituus);
+    }
+    for(int v = 0; v < 6; v++) {
+      rect(width/4+4,(v*100)+this.piirtolaskuri%500, 20,kaistaviivanpituus);
+      rect(width/4+4,(v*100)+this.piirtolaskuri%500-500, 20,kaistaviivanpituus);
       
-        rect(width*3/4-28,(v*100)+this.piirtolaskuri%500, 20,kaistaviivanpituus);
-        rect(width*3/4-28,(v*100)+this.piirtolaskuri%500-500, 20,kaistaviivanpituus);
-      }
+      rect(width*3/4-28,(v*100)+this.piirtolaskuri%500, 20,kaistaviivanpituus);
+      rect(width*3/4-28,(v*100)+this.piirtolaskuri%500-500, 20,kaistaviivanpituus);
     }
     
-
-    this.mopo.x = this.laskeMoponX();
+    //PIIRRETÄÄN ESINEET
+    for (int i=0; i<this.esineet.size(); i++) {
+      this.esineet.get(i).piirra(); 
+    }
+    
     //println(this.blob.annaBlobinX());
     
-    //Piirretään objektit
+    //PIIRRETÄÄN MOPEDI!!!!!!!!!!!
     
-    //piirretään mopo
+    this.mopo.x = this.laskeMoponX();
     if(this.mopo.y < 450) {
-      
+      if(nosMode) {
+        this.mopo.y --;
+      }
     }
     if(!nosMode) {
       if(this.mopo.y < 450) {
@@ -253,9 +243,7 @@ class Pelimoottori {
     }
     this.mopo.piirra();
     
-    for (int i=0; i<this.esineet.size(); i++) {
-      this.esineet.get(i).piirra(); 
-    }
+    
     if ((millis()/1000) - this.viimeisinLisays >= 3) {
       esineet.add(annaRandomEsine());
       this.viimeisinLisays = (millis() / 1000);
@@ -376,8 +364,7 @@ class Pelimoottori {
           this.esineet.remove(i);
           if(e instanceof Ilokaasu) {
             nosMode = true;
-            nosKelloM = millis();
-            nosKello = nosKelloM / 1000;
+            nosKello = millis() / 1000;
             nosY = this.mopo.y;
           }
           else if(e instanceof Jerrykannu) {
@@ -407,7 +394,7 @@ class Pelimoottori {
     float kaistaArpa  = random(4);  
     Esine palautus = null;
     
-    if(arpa < 50) {  
+    if(arpa < 0) {  
       if (kaistaArpa < 1){
       palautus = new Auto(xArpa1, -50, true);
       }
@@ -421,7 +408,7 @@ class Pelimoottori {
       palautus = new Auto(xArpa4, -50, false);
       }
     }
-    else if(arpa < 60) {
+    else if(arpa < 0) {
         
       if (kaistaArpa < 1){
       palautus = new Oljylatakko(xArpa1, -50);
@@ -437,7 +424,7 @@ class Pelimoottori {
       }
     }
      
-    else if(arpa < 70) {
+    else if(arpa < 0) {
        if (kaistaArpa < 1){
       palautus = new Jerrykannu(xArpa1, -50);
       }
@@ -451,7 +438,7 @@ class Pelimoottori {
       palautus = new Jerrykannu(xArpa4, -50);
       }
     }
-    else if(arpa < 80) {
+    else if(arpa < 0) {
        if (kaistaArpa < 2){
       palautus = new Piikkimatto(100, -50);
       }
