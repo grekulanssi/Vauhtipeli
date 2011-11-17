@@ -201,7 +201,7 @@ class Pelimoottori {
     }
     imageMode(CENTER);
     
-    strokeWeight(0);
+    noStroke();
     
     //Keltaiset keskiviivat
     fill(190,180,10,200);
