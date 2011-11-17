@@ -37,6 +37,7 @@ class Pelimoottori {
   PImage taustakuvaNos;
   PImage peliohi;
   PImage restart;
+  PImage nopeusmittari;
   
   boolean nosMode;
   int nosKello;
@@ -49,10 +50,13 @@ class Pelimoottori {
   //Luodaan peli
   Pelimoottori(PApplet parent) {
     this.blob = new Blobfinder(parent);
-    taustakuva = loadImage("asvaltti.png");
-    taustakuvaNos = loadImage("asvaltti_nos.png");
     aloituskuva = loadImage("start.png");
     aloitusnappi = loadImage("startbutton.png");
+    
+    taustakuva = loadImage("asvaltti.png");
+    taustakuvaNos = loadImage("asvaltti_nos.png");
+    nopeusmittari = loadImage("nopeusmittari.png");
+    
     peliohi = loadImage("gameover.png");
     restart = loadImage("restart.png");
     
@@ -256,16 +260,19 @@ class Pelimoottori {
     //this.blob.piirra();
     
     //Nurkkamittarit TODO
+    //vasen laita, sinne tarvis bensamittarin ja vaikka ajan juoksemaan
     fill(0,255,0);
     rect(0,500,200,150);
-    rect(400,500,200,150);
     
+    //Nopeusmittari
+    image(nopeusmittari, 400,500);
     
     //fill(255,0,0);
     //rect(500,0, 200,50);
     fill(255);
     float kulunutaika = (float)millis()/1000-this.aloitusaika;
-    text(kulunutaika, 485, 620); 
+    text(kulunutaika, 85, 620);
+    text("SHIFT # " + this.nopeuskerroin, 460, 620); 
 
   }
   
@@ -394,7 +401,7 @@ class Pelimoottori {
     float kaistaArpa  = random(4);  
     Esine palautus = null;
     
-    if(arpa < 0) {  
+    if(arpa < 50) {  
       if (kaistaArpa < 1){
       palautus = new Auto(xArpa1, -50, true);
       }
@@ -408,7 +415,7 @@ class Pelimoottori {
       palautus = new Auto(xArpa4, -50, false);
       }
     }
-    else if(arpa < 0) {
+    else if(arpa < 60) {
         
       if (kaistaArpa < 1){
       palautus = new Oljylatakko(xArpa1, -50);
@@ -424,7 +431,7 @@ class Pelimoottori {
       }
     }
      
-    else if(arpa < 0) {
+    else if(arpa < 80) {
        if (kaistaArpa < 1){
       palautus = new Jerrykannu(xArpa1, -50);
       }
@@ -438,7 +445,7 @@ class Pelimoottori {
       palautus = new Jerrykannu(xArpa4, -50);
       }
     }
-    else if(arpa < 0) {
+    else if(arpa < 90) {
        if (kaistaArpa < 2){
       palautus = new Piikkimatto(100, -50);
       }
