@@ -296,30 +296,21 @@ class Pelimoottori {
   int laskeMoponX() {
       int vanhax = this.mopo.x;
       int kallistusx = this.blob.annaBlobinX()/10;
-      if(oljyaRenkaissa) {
-        kallistusx = -kallistusx;
-      }
-      int uusix = vanhax + kallistusx;
       
       if(kallistusx < 0) {
-        if(oljyaRenkaissa) {
-          mopo.asetaTila(Mopo.OIKEA);
-        }
-        else {
           mopo.asetaTila(Mopo.VASEN);
-        }
       }
       else if(kallistusx > 0) {
-        if(oljyaRenkaissa) {
-          mopo.asetaTila(Mopo.VASEN);
-        }
-        else {
           mopo.asetaTila(Mopo.OIKEA);
-        }
       }
       else {
         mopo.asetaTila(Mopo.SUORAAN);
       }
+      
+      if(oljyaRenkaissa) {
+        kallistusx = -kallistusx;
+      }
+      int uusix = vanhax + kallistusx;
       
       if (uusix < 60)
         uusix = 60;
