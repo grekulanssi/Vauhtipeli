@@ -42,8 +42,10 @@ class Pelimoottori {
   int nosKelloM;
   int nosKello;
   int nosY;
-  
   int kaistaviivanpituus;
+  
+  boolean oljyaRenkaissa;
+  int oljyKello;
   
   //Luodaan peli
   Pelimoottori(PApplet parent) {
@@ -77,6 +79,7 @@ class Pelimoottori {
 
    kaistaviivanpituus = 60;
 
+   oljyaRenkaissa = false;
   }
    
   //Näppäintä on painettu
@@ -281,6 +284,9 @@ class Pelimoottori {
   int laskeMoponX() {
       int vanhax = this.mopo.x;
       int kallistusx = this.blob.annaBlobinX()/10;
+      if(oljyaRenkaissa) {
+        kallistusx = -kallistusx;
+      }
       int uusix = vanhax + kallistusx;
       
       if(kallistusx < 0) {
@@ -306,6 +312,11 @@ class Pelimoottori {
       nosMode = false;
       nosKello = 0;
     }
+    if(oljyaRenkaissa && (millis() / 1000) - oljyKello >= 7) {
+      oljyaRenkaissa = false;
+      oljyKello = 0;
+    }
+    
     //Piirretään esineet
     for (int i=0; i<this.esineet.size(); i++) {
       Esine tamaesine = this.esineet.get(i);
@@ -347,6 +358,8 @@ class Pelimoottori {
           }
           else if(e instanceof Oljylatakko) {
             //JOTAIN LIUKASTELUA;
+            oljyaRenkaissa = true;
+            oljyKello = millis() / 1000;
           }
         }
         else {
