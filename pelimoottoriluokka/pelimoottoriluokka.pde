@@ -11,7 +11,6 @@ void draw() {
   moottori.piirra();
 }
 
-
 /*
 Pelimoottori
 */
@@ -402,10 +401,10 @@ class Pelimoottori {
   // Antaa satunnaisen uuden esineen.
   public Esine annaRandomEsine() {
     float arpa = random(100);
-    int xArpa1 = int(random(50, 165));
-    int xArpa2 = int(random(185, 300));
-    int xArpa3 = int(random(315, 420));
-    int xArpa4 = int(random(435, 550));
+    int xArpa1 = int(random(80, 160));
+    int xArpa2 = int(random(180, 270));
+    int xArpa3 = int(random(330, 415));
+    int xArpa4 = int(random(440, 530));
     float kaistaArpa  = random(4);  
     Esine palautus = null;
     
@@ -439,7 +438,7 @@ class Pelimoottori {
       }
     }
      
-    else if(arpa < 80) {
+    else if(arpa < 75) {
        if (kaistaArpa < 1){
       palautus = new Jerrykannu(xArpa1, -50);
       }
@@ -453,7 +452,7 @@ class Pelimoottori {
       palautus = new Jerrykannu(xArpa4, -50);
       }
     }
-    else if(arpa < 90) {
+    else if(arpa < 85) {
        if (kaistaArpa < 2){
       palautus = new Piikkimatto(100, -50);
       }
