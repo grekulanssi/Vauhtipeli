@@ -192,12 +192,12 @@ class Pelimoottori {
     imageMode(CORNER);
     //Piirretään tausta jatkuvana
     if(nosMode) {
-      image(taustakuvaNos, 0,this.piirtolaskuri%500, 600,500);
-      image(taustakuvaNos, 0,this.piirtolaskuri%500-500, 600,500);
+      image(taustakuvaNos, 0,this.piirtolaskuri%650, 600,650);
+      image(taustakuvaNos, 0,this.piirtolaskuri%650-650, 600,650);
     }
     else {
-      image(taustakuva, 0,this.piirtolaskuri%500, 600,500);
-      image(taustakuva, 0,this.piirtolaskuri%500-500, 600,500);
+      image(taustakuva, 0,this.piirtolaskuri%650, 600,650);
+      image(taustakuva, 0,this.piirtolaskuri%650-650, 600,650);
     }
     imageMode(CENTER);
     
@@ -239,21 +239,8 @@ class Pelimoottori {
     //PIIRRETÄÄN MOPEDI!!!!!!!!!!!
     
     this.mopo.x = this.laskeMoponX();
-    if(this.mopo.y < 450) {
-      if(nosMode) {
-        this.mopo.y --;
-      }
-    }
-    if(!nosMode) {
-      if(this.mopo.y < 450) {
-        this.mopo.y ++;
-      }
-    }
-    else {
-      if(this.mopo.y-nosY > 300-nosY) {
-        this.mopo.y --;
-      }
-    }
+    this.mopo.y = this.laskeMoponY();
+    
     this.mopo.piirra();
     
     
@@ -303,7 +290,7 @@ class Pelimoottori {
     
     //Bensavalo
     if (this.bensaa < 4) {
-     image(bensavalo, 20, 580); 
+     image(bensavalo, 20, 580);
     }
     
     //fill(255,0,0);
@@ -346,6 +333,27 @@ class Pelimoottori {
       return uusix;
   }
   
+  int laskeMoponY() {
+    int vanhaY = this.mopo.y;
+    int uusiY = vanhaY;
+    if(vanhaY < 450) {
+      if(nosMode) {
+        uusiY --;
+      }
+    }
+    if(!nosMode) {
+      if(vanhaY < 450) {
+        uusiY ++;
+      }
+    }
+    else {
+      if(vanhaY-nosY > 300-nosY) {
+        uusiY --;
+      }
+    }
+    return uusiY;
+  }
+  
   
   void pelilogiikka() {
     
@@ -353,6 +361,7 @@ class Pelimoottori {
       gameover = true;
       return;
     }
+    
       
     //kasvatetaan nopeutta
     this.nopeuskerroin = ((millis()/1000) - this.aloitusaika)/5+(nosMode? 7 : 1);
