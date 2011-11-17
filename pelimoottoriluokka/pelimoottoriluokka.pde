@@ -222,7 +222,23 @@ class Pelimoottori {
     //println(this.blob.annaBlobinX());
     
     //Piirretään objektit
+    
+    //piirretään mopo
+    if(this.mopo.y < 450) {
+      
+    }
+    if(!nosMode) {
+      if(this.mopo.y < 450) {
+        this.mopo.y ++;
+      }
+    }
+    else {
+      if(this.mopo.y > 300) {
+        this.mopo.y --;
+      }
+    }
     this.mopo.piirra();
+    
     for (int i=0; i<this.esineet.size(); i++) {
       this.esineet.get(i).piirra(); 
     }
