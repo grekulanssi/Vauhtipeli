@@ -67,8 +67,7 @@ class Pelimoottori {
     //this.esineet.
     gameover = false;
     this.nopeuskerroin = 1;
-    
-    this.viimeisinLisays = millis() / 1000;   
+    this.viimeisinLisays = this.aloitusaika = millis() / 1000;
     
    nosMode = false;
    nosKello = 0;
@@ -253,7 +252,7 @@ class Pelimoottori {
     for (int i=0; i<this.esineet.size(); i++) {
       this.esineet.get(i).piirra(); 
     }
-    if ((millis()/1000) - this.viimeisinLisays >= 3) {
+    if ((millis()/1000) - this.viimeisinLisays >= 1) {
       esineet.add(annaRandomEsine());
       this.viimeisinLisays = (millis() / 1000);
       
@@ -374,13 +373,22 @@ class Pelimoottori {
       }
     }
   }
+  
+/*
+autot:
+ekaa: min ja max random pienemmäksi
+tokaa: max random pienemmäksi
+kolmatta: min random isommaksi
+neljättä:min isommaksi, max random (vähän) pienemmäksi
+piikkimatot reunemmaksi = vasemalla pienempi, oikealla isompi x-koord
+*/
   // Antaa satunnaisen uuden esineen.
   public Esine annaRandomEsine() {
     float arpa = random(100);
-    int xArpa1 = int(random(50, 165));
-    int xArpa2 = int(random(185, 300));
-    int xArpa3 = int(random(315, 420));
-    int xArpa4 = int(random(435, 550));
+    int xArpa1 = int(random(60, 155));
+    int xArpa2 = int(random(185, 290));
+    int xArpa3 = int(random(325, 425));
+    int xArpa4 = int(random(445, 540));
     float kaistaArpa  = random(4);  
     Esine palautus = null;
     
@@ -430,10 +438,10 @@ class Pelimoottori {
     }
     else if(arpa < 80) {
        if (kaistaArpa < 2){
-      palautus = new Piikkimatto(100, -50);
+      palautus = new Piikkimatto(60, -50);
       }
       else {
-      palautus = new Piikkimatto(490, -50);
+      palautus = new Piikkimatto(510, -50);
       }
     }
     else {
@@ -454,5 +462,3 @@ class Pelimoottori {
     //return new Auto(100,-50, true);
   }
 }
-
-
