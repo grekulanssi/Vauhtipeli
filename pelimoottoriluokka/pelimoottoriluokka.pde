@@ -16,6 +16,7 @@ Pelimoottori
 */
 
 class Pelimoottori {
+    
   //ei-visuaalinen, siis LOOGINEN kokoava systeemi
   List<Esine> esineet;
   Mopo mopo;
