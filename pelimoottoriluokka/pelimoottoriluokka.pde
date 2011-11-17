@@ -41,6 +41,9 @@ class Pelimoottori {
   boolean nosMode;
   int nosKelloM;
   int nosKello;
+  int nosY;
+  
+  int kaistaviivanpituus;
   
   //Luodaan peli
   Pelimoottori(PApplet parent) {
@@ -70,7 +73,9 @@ class Pelimoottori {
    nosMode = false;
    nosKello = 0;
    nosKelloM = 0;
+   nosY = 0;
 
+   kaistaviivanpituus = 60;
 
   }
    
@@ -199,21 +204,27 @@ class Pelimoottori {
     if(nosMode) {
       println("I NEED NOOOOOOSSSS");
       int venytys = (millis() - nosKelloM)/50;
+      if(kaistaviivanpituus < 120) {
+        kaistaviivanpituus ++;
+      }
       for(int v = 0; v < 6; v++) {
-        rect(width/4+4,(v*100)+this.piirtolaskuri%500, 20,60+venytys);
-        rect(width/4+4,(v*100)+this.piirtolaskuri%500-500, 20,60+venytys);
+        rect(width/4+4,(v*100)+this.piirtolaskuri%500, 20,kaistaviivanpituus);
+        rect(width/4+4,(v*100)+this.piirtolaskuri%500-500, 20,kaistaviivanpituus);
       
-        rect(width*3/4-28,(v*100)+this.piirtolaskuri%500, 20,60+venytys);
-        rect(width*3/4-28,(v*100)+this.piirtolaskuri%500-500, 20,60+venytys);
+        rect(width*3/4-28,(v*100)+this.piirtolaskuri%500, 20,kaistaviivanpituus);
+        rect(width*3/4-28,(v*100)+this.piirtolaskuri%500-500, 20,kaistaviivanpituus);
       }
     }
     else {
+      if(kaistaviivanpituus > 60) {
+        kaistaviivanpituus --;
+      }
       for(int v = 0; v < 6; v++) {
-        rect(width/4+4,(v*100)+this.piirtolaskuri%500, 20,60);
-        rect(width/4+4,(v*100)+this.piirtolaskuri%500-500, 20,60);
+        rect(width/4+4,(v*100)+this.piirtolaskuri%500, 20,kaistaviivanpituus);
+        rect(width/4+4,(v*100)+this.piirtolaskuri%500-500, 20,kaistaviivanpituus);
       
-        rect(width*3/4-28,(v*100)+this.piirtolaskuri%500, 20,60);
-        rect(width*3/4-28,(v*100)+this.piirtolaskuri%500-500, 20,60);
+        rect(width*3/4-28,(v*100)+this.piirtolaskuri%500, 20,kaistaviivanpituus);
+        rect(width*3/4-28,(v*100)+this.piirtolaskuri%500-500, 20,kaistaviivanpituus);
       }
     }
     
@@ -233,7 +244,7 @@ class Pelimoottori {
       }
     }
     else {
-      if(this.mopo.y > 300) {
+      if(this.mopo.y-nosY > 300-nosY) {
         this.mopo.y --;
       }
     }
@@ -344,6 +355,7 @@ class Pelimoottori {
             nosMode = true;
             nosKelloM = millis();
             nosKello = nosKelloM / 1000;
+            nosY = this.mopo.y;
           }
           else if(e instanceof Jerrykannu) {
             //JOTAIN BENSAA LISAA JOTENKI
