@@ -39,6 +39,7 @@ class Pelimoottori {
   PImage restart;
   PImage nopeusmittari;
   PImage bensamittari;
+  PImage bensavalo;
   
   boolean nosMode;
   int nosKello;
@@ -58,6 +59,7 @@ class Pelimoottori {
     taustakuvaNos = loadImage("asvaltti_nos.png");
     nopeusmittari = loadImage("nopeusmittari.png");
     bensamittari = loadImage("bensamittari.png");
+    bensavalo = loadImage("bensavalo.png");
     
     peliohi = loadImage("gameover.png");
     restart = loadImage("restart.png");
@@ -298,6 +300,11 @@ class Pelimoottori {
     stroke(0);
     popMatrix();
     
+    //Bensavalo
+    if (this.bensaa < 4) {
+     image(bensavalo, 20, 580); 
+    }
+    
     //fill(255,0,0);
     //rect(500,0, 200,50);
     fill(255);
@@ -348,6 +355,10 @@ class Pelimoottori {
       
     //kasvatetaan nopeutta
     this.nopeuskerroin = ((millis()/1000) - this.aloitusaika)/5+(nosMode? 7 : 1);
+    
+    if (this.nopeuskerroin > 19 && !nosMode) {
+      this.nopeuskerroin = 19;  
+    }
     
     //vähennetään bensaa
     this.bensaa -= 0.008;
