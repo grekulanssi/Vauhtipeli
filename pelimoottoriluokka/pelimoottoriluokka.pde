@@ -266,6 +266,15 @@ class Pelimoottori {
     
     //Nopeusmittari
     image(nopeusmittari, 400,500);
+    //Nopeusmittarin viisari
+    pushMatrix();
+    translate(494,596);
+    strokeWeight(0);
+    fill(200);
+    rotate(-PI-PI/6);
+    rotate( (PI/14) * (this.nopeuskerroin) );
+    rect(0,0,50,5);
+    popMatrix();
     
     //fill(255,0,0);
     //rect(500,0, 200,50);
