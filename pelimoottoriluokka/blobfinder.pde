@@ -68,7 +68,7 @@ class Blobfinder {
       //siirretään blob kohdilleen
       xcr = x+xcr;
       ycr = y+ycr;
-      println(xcr + " " + ycr);
+      //println(xcr + " " + ycr);
       fill(255,255,50,100);
       ellipse(xcr,ycr, 10,10);
       stroke(255,255,50);

@@ -72,7 +72,8 @@ class Pelimoottori {
     //this.esineet.
     gameover = false;
     this.nopeuskerroin = 1;
-    
+    this.aloitusaika = millis()/1000;
+    println(this.nopeuskerroin);
     this.viimeisinLisays = millis() / 1000;   
     
    nosMode = false;
