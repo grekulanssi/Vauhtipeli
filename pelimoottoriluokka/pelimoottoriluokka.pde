@@ -28,6 +28,7 @@ class Pelimoottori {
   PImage aloitusnappi;
   boolean piirrapeli;
   int nopeuskerroin;
+  double bensaa; //bensaa on 0-20 litraa
   
   /* taustalla näkyvä asvaltti talletetaan attribuuttiin
    * nos tarkoittaa ilokaasua (jos et tienny niin katso Hurjapäät-leffa)
@@ -37,6 +38,7 @@ class Pelimoottori {
   PImage peliohi;
   PImage restart;
   PImage nopeusmittari;
+  PImage bensamittari;
   
   boolean nosMode;
   int nosKello;
@@ -55,6 +57,7 @@ class Pelimoottori {
     taustakuva = loadImage("asvaltti.png");
     taustakuvaNos = loadImage("asvaltti_nos.png");
     nopeusmittari = loadImage("nopeusmittari.png");
+    bensamittari = loadImage("bensamittari.png");
     
     peliohi = loadImage("gameover.png");
     restart = loadImage("restart.png");
@@ -71,6 +74,7 @@ class Pelimoottori {
     //this.esineet.
     gameover = false;
     this.nopeuskerroin = 1;
+    this.bensaa = 20;
     this.aloitusaika = millis()/1000;
     println(this.nopeuskerroin);
     this.viimeisinLisays = millis() / 1000;   
@@ -170,6 +174,11 @@ class Pelimoottori {
 
     //kasvatetaan nopeutta
     this.nopeuskerroin = ((millis()/1000) - this.aloitusaika)/5+(nosMode? 7 : 1);
+    
+    //vähennetään bensaa
+    this.bensaa -= 0.002;
+    if (this.bensaa < 0)
+      this.bensaa = 0;
 
     
     //siirretään esineitä
@@ -266,6 +275,7 @@ class Pelimoottori {
     
     //Nopeusmittari
     image(nopeusmittari, 400,500);
+    image(bensamittari, 0, 500);
     
     //Nopeusmittarin viisari
     pushMatrix();
@@ -275,6 +285,18 @@ class Pelimoottori {
     stroke(200);
     rotate(-PI-PI/6);
     rotate( (PI/14) * (this.annaNopeuskerroin()) );
+    rect(0,0,50,5);
+    stroke(0);
+    popMatrix();
+    
+    //Bensamittarin viisari
+    pushMatrix();
+    translate(65,610);
+    strokeWeight(1);
+    fill(255,0,0);
+    stroke(200);
+    rotate(-PI/2+PI/20);
+    rotate( (float) ((PI/2.2) * (1- this.bensaa/20)) );
     rect(0,0,50,5);
     stroke(0);
     popMatrix();
@@ -360,8 +382,8 @@ class Pelimoottori {
     //Tarkistetaan törmäykset
     for (int i=0; i<this.esineet.size(); i++) {
       Esine e = this.esineet.get(i);
-      if (e.tormaako(this.mopo)) {
-        if(!e.onKiva()) {
+      if (e.tormaako(this.mopo)) {        
+       
           if(e instanceof Auto) {
             //RAJAHDYS
             gameover = true;
@@ -373,23 +395,26 @@ class Pelimoottori {
             //JOTAIN LIUKASTELUA;
             oljyaRenkaissa = true;
             oljyKello = millis() / 1000;
-          }
-        }
-        else {
-          this.esineet.remove(i);
-          if(e instanceof Ilokaasu) {
-            nosMode = true;
-            nosKello = millis() / 1000;
-            nosY = this.mopo.y;
+            this.esineet.remove(i);
           }
           else if(e instanceof Jerrykannu) {
-            //JOTAIN BENSAA LISAA JOTENKI
+            println(this.bensaa);
+            this.bensaa += 5;
+            println(this.bensaa);
+            if (this.bensaa > 20)
+              this.bensaa = 20;
+            this.esineet.remove(i);
+          }      
+        
+          else  if(e instanceof Ilokaasu) {
+              nosMode = true;
+              nosKello = millis() / 1000;
+              nosY = this.mopo.y;
           }
-        }
-        return;
+
+          }
       }
-  
-    }  
+
     
     //tuhotaan piiloon menneet esineet
     for(int j = 0; j < this.esineet.size(); j ++) {
