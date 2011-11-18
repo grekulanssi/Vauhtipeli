@@ -57,6 +57,9 @@ class Pelimoottori {
   PImage bensamittari;
   PImage bensavalo;
   
+  PImage rajahdyskuva;
+
+  
   boolean nosMode;
   int nosKello;
   int nosY;
@@ -80,6 +83,7 @@ class Pelimoottori {
     nopeusmittari = loadImage("nopeusmittari.png");
     bensamittari = loadImage("bensamittari.png");
     bensavalo = loadImage("bensavalo.png");
+    rajahdyskuva = loadImage("rajahdys.png");
     
     peliohi = loadImage("gameover.png");
     restart = loadImage("restart.png");
@@ -99,7 +103,7 @@ class Pelimoottori {
     gameover = false;
     loppuviesti = "";
     this.nopeuskerroin = 1;
-    this.bensaa = 5;
+    this.bensaa = 20;
     this.aloitusaika = millis()/1000;
     println(this.nopeuskerroin);
     this.viimeisinLisays = millis() / 1000;   
@@ -453,6 +457,8 @@ class Pelimoottori {
   
   void pelilogiikka() {
     
+    voittiko();
+    
     if (this.bensaa <= 0 && !nosMode) {
       gameover = true;
       loppuviesti = "You ran outta gasoline!";
@@ -530,6 +536,7 @@ class Pelimoottori {
           if (e.tormaako(mus)) {
             this.esineet.remove(e);
             this.ammukset.remove(q);
+            aani.rajahdys();
             break; 
           }
         }
@@ -538,7 +545,7 @@ class Pelimoottori {
       if (e.tormaako(this.mopo)) {        
        
           if(e instanceof Auto) {
-            //RAJAHDYS
+            aani.rajahdys();
             gameover = true;
             loppuviesti = "You crashed!";
             return;
@@ -549,7 +556,6 @@ class Pelimoottori {
             return;
           }
           else if(e instanceof Oljylatakko) {
-            //JOTAIN LIUKASTELUA;
             oljyaRenkaissa = true;
             oljyKello = millis() / 1000;
             this.esineet.remove(i);
@@ -583,6 +589,20 @@ class Pelimoottori {
       }
     }
   }
+  
+  void voittiko() {
+    if(mopo.y == 0) {
+      gameover = true;
+      loppuviesti = "Congrats! You lost the tail!";
+      return;
+    }
+    if(millis()/1000-this.aloitusaika > 300) {
+      gameover = true;
+      loppuviesti = "Congrats! You made it long enough!";
+    }
+  }
+  
+  
   // Antaa satunnaisen uuden esineen.
   public Esine annaRandomEsine() {
     float arpa = random(100);
@@ -593,7 +613,7 @@ class Pelimoottori {
     float kaistaArpa  = random(4);  
     Esine palautus = null;
     
-    if(arpa < 50) {  
+    if(arpa < 5) {  
       if (kaistaArpa < 1){
       palautus = new Auto(xArpa1, -50, true);
       }
@@ -607,7 +627,7 @@ class Pelimoottori {
       palautus = new Auto(xArpa4, -50, false);
       }
     }
-    else if(arpa < 60) {
+    else if(arpa < 6) {
         
       if (kaistaArpa < 1){
       palautus = new Oljylatakko(xArpa1, -50);

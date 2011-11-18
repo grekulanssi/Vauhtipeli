@@ -61,6 +61,7 @@ class Aani {
   }
   
   public void rajahdys() {
+    explode.rewind();
     explode.play();
   }
   
