@@ -346,7 +346,7 @@ class Pelimoottori {
     popMatrix();
     
     //Bensavalo
-    if (this.bensaa < 4 || this.aani.voimakkuustesti()) {
+    if (this.bensaa < 4) {
      image(bensavalo, 20, 580);
     }
     
@@ -484,10 +484,11 @@ class Pelimoottori {
       Esine e = this.esineet.get(i);
       
       //törmääkö esine ammukseen
-      for (int q=0; q<this.ammukset.size(); q++) {
+      for (int q=0; q<this.ammukset.size() && !(e instanceof Piikkimatto); q++) {
         Ammus mus = this.ammukset.get(q);
         if (e.tormaako(mus)) {
           this.esineet.remove(e);
+          this.ammukset.remove(q);
           break; 
         }
       }

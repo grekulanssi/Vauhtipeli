@@ -158,6 +158,7 @@ class Blobfinder {
     //Haetaan keskipisteen väri
     
     //Otetaan keskiarvo muutaman pikselin alueelta
+    /*
     int area = 1;
     int numberOfPixels = (2*area+1)*2;
     
@@ -170,8 +171,8 @@ class Blobfinder {
        greens = greens + (int)green(vari);
        blues = blues + (int)blue(vari);
      } 
-    }
-    return color(reds/numberOfPixels, greens/numberOfPixels, blues/numberOfPixels);
-    
+    }*/
+    //return color(reds/numberOfPixels, greens/numberOfPixels, blues/numberOfPixels);
+    return myMovieColors[75*numPixelsX+100];
   }
 }

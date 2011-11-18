@@ -62,9 +62,10 @@ class Aani {
   // otetaan huomioon vain riittävän kovat äänet.
   public boolean voimakkuustesti(){
     //ei voi ampua liian nopeesti
-    if (millis() - this.viimeksiammuttu < 1000) {
+    if (millis() - this.viimeksiammuttu < 500) {
       return false;
     }
+    println("AMPUU");
     this.viimeksiammuttu = millis();
     
     float voimakkuus = lineIn.mix.level()*20;
