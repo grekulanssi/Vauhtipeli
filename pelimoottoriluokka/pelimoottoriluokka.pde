@@ -308,12 +308,7 @@ class Pelimoottori {
 
     //this.blob.piirra();
     
-    //Nurkkamittarit TODO
-    //vasen laita, sinne tarvis bensamittarin ja vaikka ajan juoksemaan
-    fill(0,255,0);
-    rect(0,500,200,150);
-    
-    //Nopeusmittari
+    //Nopeus- ja bensamittarit
     image(nopeusmittari, 400,500);
     image(bensamittari, 0, 500);
     
