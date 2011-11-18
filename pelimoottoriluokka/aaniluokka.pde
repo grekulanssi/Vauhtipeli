@@ -8,6 +8,7 @@ class Aani {
   final int YLA_TAAJUUS = 200000;
   final int HERKKYYS = 0;
   int viimeksiammuttu = 0;
+  int viive = 0;
   
   AudioPlayer djIntro;
   AudioPlayer djNormal;
@@ -59,10 +60,19 @@ class Aani {
     djNos.loop();
   }
   
+  int annaViive() {
+    return viive;
+  }
+  
+  private void asetaViive(int v) {
+    viive = v;
+  }
+  
   // otetaan huomioon vain riittävän kovat äänet.
   public boolean voimakkuustesti(){
     //ei voi ampua liian nopeesti
-    if (millis() - this.viimeksiammuttu < 1000) {
+    viive = millis() - this.viimeksiammuttu;
+    if (viive < 1000) {
       return false;
     }
     this.viimeksiammuttu = millis();
