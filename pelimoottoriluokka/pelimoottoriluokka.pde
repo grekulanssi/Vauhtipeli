@@ -346,14 +346,29 @@ class Pelimoottori {
     popMatrix();
     
     //Bensavalo
-    if (this.bensaa < /*4*/19) {
+    if (this.bensaa < 4) {
      image(bensavalo, 117, 512);
     }
     
     // Aseen latausmittari
     fill(255,0,0);
     noStroke();
-    rect(0,645,  aani.annaViive()/10, 5);
+    int w = aani.annaViive()/10;
+    if(w > 200) {
+      w = 200;
+    }
+    if(w < 200) {
+      text("RELOAD", 67,644);
+    }
+    rect(0,645,  w, 5);
+    
+    //ilokaasun vilkkuvalo
+    if(nosMode && (millis()/100 % 2 == 0)) {
+      fill(50,50,255);
+      stroke(150,150,255);
+      strokeWeight(2);
+      ellipse(10,630, 8,8);
+    }
     
     
     //fill(255,0,0);
@@ -625,6 +640,18 @@ class Pelimoottori {
     return palautus;
     //return new Auto(100,-50, true);
   }
+  
+  void stop() {
+    aani.stop();
+  }
 }
+
+void stop() {
+    
+    moottori.stop();
+    minim.stop();
+    
+    super.stop();
+  }
 
 

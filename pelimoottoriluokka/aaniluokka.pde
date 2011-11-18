@@ -6,7 +6,7 @@ class Aani {
   
   final int ALA_TAAJUUS = 0;
   final int YLA_TAAJUUS = 200000;
-  final int HERKKYYS = 10;
+  final int HERKKYYS = 8;
   int viimeksiammuttu = 0;
   int viive = 0;
   
@@ -14,7 +14,7 @@ class Aani {
   AudioPlayer djNormal;
   AudioPlayer djNos;
   
-  
+  AudioSnippet explode;
 
   public Aani() {
     println("3MINIM ON " + minim);
@@ -27,7 +27,7 @@ class Aani {
     djNormal = minim.loadFile("perusloop.mp3");
     djNos = minim.loadFile("ilokaasuloop.mp3");
 
-
+    //explode = minim.loadSnippet("explosion.mp3");
   }
   
   public void intronauha() {
@@ -60,6 +60,10 @@ class Aani {
     djNos.loop();
   }
   
+  public void rajahdys() {
+    explode.play();
+  }
+  
   int annaViive() {
     return viive;
   }
@@ -74,10 +78,7 @@ class Aani {
     viive = millis() - this.viimeksiammuttu;
     if (viive < 2000) {
       return false;
-    }
-    
-  
-    
+    }  
     
     float voimakkuus = lineIn.mix.level()*20;
     //println("voimakkuus: " + voimakkuus + ", alaraja: " + HERKKYYS);
@@ -89,4 +90,11 @@ class Aani {
     return false;
   }
   
+  void stop() {
+    djNormal.close();
+    djIntro.close();
+    djNos.close();
+    
+    explode.close();
+  }
 }
