@@ -346,14 +346,14 @@ class Pelimoottori {
     popMatrix();
     
     //Bensavalo
-    if (this.bensaa < 4) {
-     image(bensavalo, 20, 580);//VAIHDA PAIKKAA
+    if (this.bensaa < /*4*/19) {
+     image(bensavalo, 117, 512);//VAIHDA PAIKKAA
     }
     
     // Aseen latausmittari
     fill(255,0,0);
     stroke(200);
-    rect(10,600, aani.annaViive()/10, 5);
+    rect(0,640, aani.annaViive()/10, 5);
     
     
     //fill(255,0,0);
