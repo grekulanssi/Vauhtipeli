@@ -57,9 +57,6 @@ class Pelimoottori {
   PImage bensamittari;
   PImage bensavalo;
   
-  PImage rajahdyskuva;
-
-  
   boolean nosMode;
   int nosKello;
   int nosY;
@@ -83,7 +80,6 @@ class Pelimoottori {
     nopeusmittari = loadImage("nopeusmittari.png");
     bensamittari = loadImage("bensamittari.png");
     bensavalo = loadImage("bensavalo.png");
-    rajahdyskuva = loadImage("rajahdys.png");
     
     peliohi = loadImage("gameover.png");
     restart = loadImage("restart.png");
@@ -119,33 +115,9 @@ class Pelimoottori {
    oljyaRenkaissa = false;
    
   }
-   
-   /*
-  //Näppäintä on painettu
-  void painettu() {
-    if (key == CODED) {
-        switch (keyCode) {
-         case UP:
-          this.mopo.y--;
-          break;
-         case DOWN:
-           this.mopo.y++;
-           break;
-         case LEFT:
-           this.mopo.x--;
-           break;
-         case RIGHT:
-           this.mopo.x++;
-           break;
-      }
-    }
-    
-  }*/
   
   //Yleismetodi piirrä
   void piirra() {
-    
-         
     //Piirretään peli      
     if (piirrapeli) {
       piirraPeli();
@@ -229,7 +201,7 @@ class Pelimoottori {
       //näytetään tulos sekunteina
       float kulunutaika = (float)millis()/1000-this.aloitusaika;
       if (this.lopputulos < 0) {
-        this.lopputulos = kulunutaika;
+        this.lopputulos = (int) kulunutaika;
       }
       text(this.lopputulos + " seconds", width/2-45, 270);
       
@@ -248,11 +220,9 @@ class Pelimoottori {
     //toteutetaan pelilogiikka
     pelilogiikka();   
     
-    
     //piirretään esineet    
     background(255);
     
-
     imageMode(CORNER);
     //Piirretään tausta jatkuvana
     if(nosMode) {
@@ -302,12 +272,9 @@ class Pelimoottori {
     fill(0);
     for (int i=0; i<this.ammukset.size(); i++) {
       this.ammukset.get(i).piirra(); 
-    }
-    
-    //println(this.blob.annaBlobinX());
+    }    
     
     //PIIRRETÄÄN MOPEDI!!!!!!!!!!!
-    
     this.mopo.x = this.laskeMoponX();
     this.mopo.y = this.laskeMoponY();
     
@@ -378,15 +345,10 @@ class Pelimoottori {
       ellipse(10,630, 8,8);
     }
     
-    
-    //fill(255,0,0);
-    //rect(500,0, 200,50);
     fill(255);
     float kulunutaika = (float)millis()/1000-this.aloitusaika;
 
     text("SHIFT # " + (this.nopeuskerroin/3+1), 460, 620); 
-
-    //println("Nopeus: " + this.annaNopeuskerroin());
   }
   
   float annaNopeuskerroin() {
@@ -464,10 +426,9 @@ class Pelimoottori {
       loppuviesti = "You ran outta gasoline!";
       return;
     }
-    
-      
+     
     //kasvatetaan nopeutta
-    this.nopeuskerroin = ((millis()/1000) - this.aloitusaika)/5+(nosMode? 7 : 1);
+    this.nopeuskerroin = ((millis()/1000) - this.aloitusaika)/3+(nosMode? 7 : 1);
     
     if (this.nopeuskerroin > 19 && !nosMode) {
       this.nopeuskerroin = 19;  
@@ -596,7 +557,7 @@ class Pelimoottori {
       loppuviesti = "Congrats! You lost the tail!";
       return;
     }
-    if(millis()/1000-this.aloitusaika > 300) {
+    if(millis()/1000-this.aloitusaika > 180) {
       gameover = true;
       loppuviesti = "Congrats! You made it long enough!";
     }
@@ -613,7 +574,7 @@ class Pelimoottori {
     float kaistaArpa  = random(4);  
     Esine palautus = null;
     
-    if(arpa < 5) {  
+    if(arpa < 50) {  
       if (kaistaArpa < 1){
       palautus = new Auto(xArpa1, -50, true);
       }
@@ -627,7 +588,7 @@ class Pelimoottori {
       palautus = new Auto(xArpa4, -50, false);
       }
     }
-    else if(arpa < 6) {
+    else if(arpa < 55) {
         
       if (kaistaArpa < 1){
       palautus = new Oljylatakko(xArpa1, -50);

@@ -46,16 +46,3 @@ class Mopo extends Objekti {
   }
   
 }
-
-/*
- PImage kuva;
-  int leveys, korkeus;
-  
-  public Esine(boolean onkoKiva, String tiedostonimi, int x, int y, int leveys, int korkeus) {
-    super(x, y, leveys, korkeus);
-    kiva = onkoKiva;
-    kuva = loadImage(tiedostonimi);
-    this.leveys = leveys;
-    this.korkeus = korkeus;
-  }
-  */

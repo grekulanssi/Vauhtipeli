@@ -20,9 +20,7 @@ class Aani {
     println("3MINIM ON " + minim);
     minim.debugOn();
     lineIn = minim.getLineIn(Minim.STEREO, 512);
-    // voikohan tuon fft:n poistaa?
-    //fft = new FFT(lineIn.bufferSize(), lineIn.sampleRate());
-    
+  
     djIntro = minim.loadFile("introloop.mp3");
     djNormal = minim.loadFile("perusloop.mp3");
     djNos = minim.loadFile("ilokaasuloop.mp3");
