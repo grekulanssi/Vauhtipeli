@@ -490,10 +490,11 @@ class Pelimoottori {
       Esine e = this.esineet.get(i);
       
       //törmääkö esine ammukseen
-      for (int q=0; q<this.ammukset.size(); q++) {
+      for (int q=0; q<this.ammukset.size() && !(e instanceof Piikkimatto); q++) {
         Ammus mus = this.ammukset.get(q);
         if (e.tormaako(mus)) {
           this.esineet.remove(e);
+          this.ammukset.remove(q);
           break; 
         }
       }
