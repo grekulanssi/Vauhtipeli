@@ -6,7 +6,7 @@ class Aani {
   
   final int ALA_TAAJUUS = 0;
   final int YLA_TAAJUUS = 200000;
-  final int HERKKYYS = 5;
+  final int HERKKYYS = 10;
   int viimeksiammuttu = 0;
   int viive = 0;
   
@@ -75,12 +75,15 @@ class Aani {
     if (viive < 2000) {
       return false;
     }
-    this.viimeksiammuttu = millis();
+    
+  
+    
     
     float voimakkuus = lineIn.mix.level()*20;
     //println("voimakkuus: " + voimakkuus + ", alaraja: " + HERKKYYS);
     
     if (voimakkuus > HERKKYYS){
+      this.viimeksiammuttu = millis();
       return true;
     }
     return false;
