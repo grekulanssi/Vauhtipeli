@@ -6,7 +6,7 @@ class Aani {
   
   final int ALA_TAAJUUS = 0;
   final int YLA_TAAJUUS = 200000;
-  final int HERKKYYS = 0;
+  final int HERKKYYS = 5;
   int viimeksiammuttu = 0;
   int viive = 0;
   

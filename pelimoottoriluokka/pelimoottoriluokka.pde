@@ -490,14 +490,15 @@ class Pelimoottori {
       Esine e = this.esineet.get(i);
       
       //törmääkö esine ammukseen
-      for (int q=0; q<this.ammukset.size() && !(e instanceof Piikkimatto); q++) {
-        Ammus mus = this.ammukset.get(q);
-        if (e.tormaako(mus)) {
-          this.esineet.remove(e);
-          this.ammukset.remove(q);
-          break; 
+      if (e instanceof Auto || e instanceof Jerrykannu || e instanceof Ilokaasu)
+        for (int q=0; q<this.ammukset.size(); q++) {
+          Ammus mus = this.ammukset.get(q);
+          if (e.tormaako(mus)) {
+            this.esineet.remove(e);
+            this.ammukset.remove(q);
+            break; 
+          }
         }
-      }
       
       //törmääkö esine mopoon
       if (e.tormaako(this.mopo)) {        
