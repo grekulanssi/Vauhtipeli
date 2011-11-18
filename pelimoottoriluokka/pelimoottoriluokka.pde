@@ -1,9 +1,18 @@
+import ddf.minim.*;
+import ddf.minim.analysis.*;
+
+Minim minim;
+AudioInput lineIn;
+FFT fft;
+
 /* 
 Pakolliset processing-metodit
 */
 Pelimoottori moottori;
 void setup() {
   size(600,650);
+  
+  minim = new Minim(this);
   moottori = new Pelimoottori(this);
 }
 
@@ -16,6 +25,8 @@ Pelimoottori
 */
 
 class Pelimoottori {
+  
+  Aani aani;
     
   //ei-visuaalinen, siis LOOGINEN kokoava systeemi
   List<Esine> esineet;
@@ -31,6 +42,7 @@ class Pelimoottori {
   int nopeuskerroin;
   double bensaa; //bensaa on 0-20 litraa
   float lopputulos;
+  boolean voitto;
   
   /* taustalla näkyvä asvaltti talletetaan attribuuttiin
    * nos tarkoittaa ilokaasua (jos et tienny niin katso Hurjapäät-leffa)
@@ -51,8 +63,12 @@ class Pelimoottori {
   boolean oljyaRenkaissa;
   int oljyKello;
   
+  
   //Luodaan peli
   Pelimoottori(PApplet parent) {
+    
+    aani = new Aani();
+    
     this.blob = new Blobfinder(parent);
     aloituskuva = loadImage("start.png");
     aloitusnappi = loadImage("startbutton.png");
@@ -72,6 +88,7 @@ class Pelimoottori {
   }
   
  void uusiPeli() {
+      
     this.esineet = new ArrayList<Esine>(); 
     this.mopo = new Mopo(width/2, 450);    
     //this.esineet.add(new Piikkimatto(200, 300));
@@ -83,6 +100,7 @@ class Pelimoottori {
     println(this.nopeuskerroin);
     this.viimeisinLisays = millis() / 1000;   
     this.lopputulos = -1;
+    this.voitto = false;
     
    nosMode = false;
    nosKello = 0;
@@ -91,6 +109,7 @@ class Pelimoottori {
    kaistaviivanpituus = 60;
 
    oljyaRenkaissa = false;
+   
   }
    
    /*
@@ -127,14 +146,38 @@ class Pelimoottori {
     }
       
     //Piirretään peli      
-    if (piirrapeli)
-      piirraPeli(); 
+    if (piirrapeli) {
+      piirraPeli();
+      soitaAanet();
+    }
     //Piirretään valikko
-    else
+    else {
       piirraValikko();
+    }
+  }
+ 
+  void soitaAanet() {
+    if(this.gameover){
+      if(this.voitto) {
+        aani.ilokaasunauha();
+      }
+      else {
+        aani.intronauha();
+      }
+    }
+    else {
+      if(nosMode) {
+        aani.ilokaasunauha();
+      }
+      else {
+        aani.perusnauha();
+      }
+    }
   }
   
   void piirraValikko() {
+    
+    aani.intronauha();
     
     image(aloituskuva,0,0);
     
@@ -161,7 +204,7 @@ class Pelimoottori {
   
   //Piirretään pelin tilanne
   void piirraPeli() {
-        
+    
     //piirtolaskuria käytetään taustan näyttämiseen/rullaamiseen
     //se ei näytä välttämättä oikeaa piirtokertojen määrää
     piirtolaskuri = piirtolaskuri + this.nopeuskerroin;
