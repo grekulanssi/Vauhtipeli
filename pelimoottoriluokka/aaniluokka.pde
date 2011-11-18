@@ -7,6 +7,7 @@ class Aani {
   final int ALA_TAAJUUS = 0;
   final int YLA_TAAJUUS = 200000;
   final int HERKKYYS = 0;
+  int viimeksiammuttu = 0;
   
   AudioPlayer djIntro;
   AudioPlayer djNormal;
@@ -60,10 +61,16 @@ class Aani {
   
   // otetaan huomioon vain riittävän kovat äänet.
   public boolean voimakkuustesti(){
-    float voimakkuus = lineIn.mix.level()*20;
-    println("voimakkuus: " + voimakkuus + ", alaraja: " + HERKKYYS);
+    //ei voi ampua liian nopeesti
+    if (millis() - this.viimeksiammuttu < 1000) {
+      return false;
+    }
+    this.viimeksiammuttu = millis();
     
-    if (voimakkuus <= HERKKYYS){
+    float voimakkuus = lineIn.mix.level()*20;
+    //println("voimakkuus: " + voimakkuus + ", alaraja: " + HERKKYYS);
+    
+    if (voimakkuus > HERKKYYS){
       return true;
     }
     return false;

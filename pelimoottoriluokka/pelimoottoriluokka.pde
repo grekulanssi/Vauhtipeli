@@ -30,6 +30,7 @@ class Pelimoottori {
     
   //ei-visuaalinen, siis LOOGINEN kokoava systeemi
   List<Esine> esineet;
+  List<Ammus> ammukset;
   Mopo mopo;
   boolean gameover;
   Blobfinder blob;
@@ -90,6 +91,7 @@ class Pelimoottori {
  void uusiPeli() {
       
     this.esineet = new ArrayList<Esine>(); 
+    this.ammukset = new ArrayList<Ammus>(); 
     this.mopo = new Mopo(width/2, 450);    
     //this.esineet.add(new Piikkimatto(200, 300));
     //this.esineet.
@@ -137,14 +139,7 @@ class Pelimoottori {
   //Yleismetodi piirrä
   void piirra() {
     
-    ///Aloitusruudussa valitaan nenän väri
-    if (mousePressed && mouseX <= 360 && mouseX >= 240 && 
-          mouseY >= 550 && mouseY <= 550+33) {
-      samplecolor = this.blob.annaKeskipisteenVari();
-      piirrapeli = true;
-      this.aloitusaika = millis()/1000;
-    }
-      
+         
     //Piirretään peli      
     if (piirrapeli) {
       piirraPeli();
@@ -152,6 +147,13 @@ class Pelimoottori {
     }
     //Piirretään valikko
     else {
+      ///Aloitusruudussa valitaan nenän väri
+      if (mousePressed && mouseX <= 360 && mouseX >= 240 && 
+          mouseY >= 550 && mouseY <= 550+33) {
+        samplecolor = this.blob.annaKeskipisteenVari();
+        piirrapeli = true;
+        this.aloitusaika = millis()/1000;
+      }
       piirraValikko();
     }
   }
@@ -204,6 +206,7 @@ class Pelimoottori {
   
   //Piirretään pelin tilanne
   void piirraPeli() {
+
     
     //piirtolaskuria käytetään taustan näyttämiseen/rullaamiseen
     //se ei näytä välttämättä oikeaa piirtokertojen määrää
@@ -287,6 +290,12 @@ class Pelimoottori {
       this.esineet.get(i).piirra(); 
     }
     
+    //PIIRRETÄÄN AMMUKSET
+    fill(0);
+    for (int i=0; i<this.ammukset.size(); i++) {
+      this.ammukset.get(i).piirra(); 
+    }
+    
     //println(this.blob.annaBlobinX());
     
     //PIIRRETÄÄN MOPEDI!!!!!!!!!!!
@@ -337,7 +346,7 @@ class Pelimoottori {
     popMatrix();
     
     //Bensavalo
-    if (this.bensaa < 4) {
+    if (this.bensaa < 4 || this.aani.voimakkuustesti()) {
      image(bensavalo, 20, 580);
     }
     
@@ -432,7 +441,18 @@ class Pelimoottori {
       oljyKello = 0;
     }
     
-    //Piirretään esineet
+    //Lisätään ammus
+    if (this.aani.voimakkuustesti()) {
+      this.ammukset.add(new Ammus(this.mopo.x,this.mopo.y)); 
+    }
+    
+    //siirretään ammuksia
+    for (int i=0; i<this.ammukset.size(); i++) {
+      Ammus laukaus = this.ammukset.get(i);
+      laukaus.y -= 10;
+    }
+    
+    //Siirretään esineet
     for (int i=0; i<this.esineet.size(); i++) {
       Esine tamaesine = this.esineet.get(i);
       if (tamaesine instanceof Auto) {
@@ -462,6 +482,17 @@ class Pelimoottori {
     //Tarkistetaan törmäykset
     for (int i=0; i<this.esineet.size(); i++) {
       Esine e = this.esineet.get(i);
+      
+      //törmääkö esine ammukseen
+      for (int q=0; q<this.ammukset.size(); q++) {
+        Ammus mus = this.ammukset.get(q);
+        if (e.tormaako(mus)) {
+          this.esineet.remove(e);
+          break; 
+        }
+      }
+      
+      //törmääkö esine mopoon
       if (e.tormaako(this.mopo)) {        
        
           if(e instanceof Auto) {

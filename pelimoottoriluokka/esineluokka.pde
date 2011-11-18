@@ -26,12 +26,12 @@ abstract class Esine extends Objekti {
     image(kuva, x,y);
   }
   
-  boolean tormaako(Mopo mopo) {
-    int minXEtaisyys = mopo.leveys/2 + this.leveys/2;
-    int minYEtaisyys = mopo.korkeus/2 + this.korkeus/2; 
+  boolean tormaako(Objekti objekti) {
+    int minXEtaisyys = objekti.leveys/2 + this.leveys/2;
+    int minYEtaisyys = objekti.korkeus/2 + this.korkeus/2; 
     
-    if (Math.abs(this.x-mopo.x) < minXEtaisyys && 
-        Math.abs(this.y-mopo.y) < minYEtaisyys) {
+    if (Math.abs(this.x-objekti.x) < minXEtaisyys && 
+        Math.abs(this.y-objekti.y) < minYEtaisyys) {
          return true; 
         }
         

@@ -12,3 +12,15 @@ abstract class Objekti {
   abstract void piirra();
   
 }
+
+
+class Ammus extends Objekti {
+  
+ Ammus(int x,int y) {
+  super(x,y,10,10);  
+ } 
+ 
+ void piirra() {
+   ellipse(x,y,this.leveys,this.korkeus);
+ }
+}
