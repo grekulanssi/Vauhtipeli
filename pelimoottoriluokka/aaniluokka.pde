@@ -27,7 +27,7 @@ class Aani {
     djNormal = minim.loadFile("perusloop.mp3");
     djNos = minim.loadFile("ilokaasuloop.mp3");
 
-    //explode = minim.loadSnippet("explosion.mp3");
+    explode = minim.loadSnippet("explosion.wav");
   }
   
   public void intronauha() {

@@ -33,6 +33,7 @@ class Pelimoottori {
   List<Ammus> ammukset;
   Mopo mopo;
   boolean gameover;
+  String loppuviesti;
   Blobfinder blob;
   int viimeisinLisays;
   int aloitusaika;
@@ -96,8 +97,9 @@ class Pelimoottori {
     //this.esineet.add(new Piikkimatto(200, 300));
     //this.esineet.
     gameover = false;
+    loppuviesti = "";
     this.nopeuskerroin = 1;
-    this.bensaa = 5;//ASETA 20 ALKUUN!
+    this.bensaa = 5;
     this.aloitusaika = millis()/1000;
     println(this.nopeuskerroin);
     this.viimeisinLisays = millis() / 1000;   
@@ -226,6 +228,8 @@ class Pelimoottori {
         this.lopputulos = kulunutaika;
       }
       text(this.lopputulos + " seconds", width/2-45, 270);
+      
+      text(loppuviesti, width/2, 300);
       
       //jos klikataan restart
       if (mousePressed && mouseX >= (width/2)-96 && mouseX <= (width/2)+96 && 
@@ -423,6 +427,11 @@ class Pelimoottori {
         uusiY ++;
       }
     }
+    else if(!bensaVahissa()) {
+      if(vanhaY > 450) {
+        uusiY --;
+      }
+    }
     if(vanhaY < 450) {
       if(nosMode) {
         uusiY --;
@@ -444,8 +453,9 @@ class Pelimoottori {
   
   void pelilogiikka() {
     
-    if (this.bensaa <= 0) {
+    if (this.bensaa <= 0 && !nosMode) {
       gameover = true;
+      loppuviesti = "You ran outta gasoline!";
       return;
     }
     
@@ -530,10 +540,12 @@ class Pelimoottori {
           if(e instanceof Auto) {
             //RAJAHDYS
             gameover = true;
+            loppuviesti = "You crashed!";
             return;
           }
           else if(e instanceof Piikkimatto) {
             gameover = true;
+            loppuviesti = "You drove into a spike mat!";
             return;
           }
           else if(e instanceof Oljylatakko) {
@@ -553,6 +565,7 @@ class Pelimoottori {
         
           else  if(e instanceof Ilokaasu) {
               nosMode = true;
+              this.bensaa += 1;
               nosKello = millis() / 1000;
               nosY = this.mopo.y;
               this.esineet.remove(i);
