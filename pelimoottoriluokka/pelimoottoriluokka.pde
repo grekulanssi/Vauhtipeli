@@ -97,7 +97,7 @@ class Pelimoottori {
     //this.esineet.
     gameover = false;
     this.nopeuskerroin = 1;
-    this.bensaa = 20;
+    this.bensaa = 5;//ASETA 20 ALKUUN!
     this.aloitusaika = millis()/1000;
     println(this.nopeuskerroin);
     this.viimeisinLisays = millis() / 1000;   
@@ -346,7 +346,7 @@ class Pelimoottori {
     popMatrix();
     
     //Bensavalo
-    if (this.bensaa < 4) {
+    if (bensaVahissa()) {
      image(bensavalo, 117, 512);
     }
     
@@ -411,9 +411,18 @@ class Pelimoottori {
       return uusix;
   }
   
+  boolean bensaVahissa() {
+    return (this.bensaa < 4);
+  }
+  
   int laskeMoponY() {
     int vanhaY = this.mopo.y;
     int uusiY = vanhaY;
+    if(!nosMode && bensaVahissa()) {
+      if(millis()/100 % 6 == 0) {
+        uusiY ++;
+      }
+    }
     if(vanhaY < 450) {
       if(nosMode) {
         uusiY --;
