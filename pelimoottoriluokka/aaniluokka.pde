@@ -72,7 +72,7 @@ class Aani {
   public boolean voimakkuustesti(){
     //ei voi ampua liian nopeesti
     viive = millis() - this.viimeksiammuttu;
-    if (viive < 1000) {
+    if (viive < 2000) {
       return false;
     }
     this.viimeksiammuttu = millis();
